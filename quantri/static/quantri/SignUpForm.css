@@ -1,0 +1,73 @@
+/* quantri/SignUpForm.css */
+
+/* Thiết lập font và màu chung cho trang */
+body {
+    background-color: #ffffff;
+    
+}
+.fromdiv{
+    width: 50%;
+    margin: auto;
+    padding-bottom: 50px;
+}
+/* Phần đầu trang */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+/* Form đăng ký */
+.formdiv {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 100px;
+}
+
+/* Nhãn và ô nhập thông tin */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Nút Đăng ký và Đăng nhập */
+button[type="submit"],
+button[type="button"] {
+    background-color: rgb(197, 10, 51);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+ 
+
+}
+button {
+    margin-left: 15%;
+
+}
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #b30054;
+  }
+  
+a {
+    text-decoration: none;
+}

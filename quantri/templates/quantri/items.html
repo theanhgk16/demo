@@ -1,0 +1,117 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        {% load static %}
+        <title>Items List</title>
+        <link rel="stylesheet" href="{% static 'quantri/items_list.css' %}">
+    </head>
+    <body>
+    <div class="container">
+        <div class="main_item">
+            <ul>
+                <li class="Title"><strong></strong> {{ item.Title }}</li>
+                <li class="Content"><strong></strong> {{ item.Content1 }}</li>
+                {% if item.Image1 %}
+                    <li><strong></strong> <img src="{{ item.Image1.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content2 }}</li>
+                {% if item.Image2 %}
+                    <li><strong></strong> <img src="{{ item.Image2.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content3 }}</li>
+                {% if item.Image3 %}
+                    <li><strong></strong> <img src="{{ item.Image3.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content4 }}</li>
+                {% if item.Image4 %}
+                    <li><strong></strong> <img src="{{ item.Image4.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content5 }}</li>
+                {% if item.Image5 %}
+                    <li><strong></strong> <img src="{{ item.Image5.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content6 }}</li>
+                {% if item.Image6 %}
+                    <li><strong></strong> <img src="{{ item.Image6.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ item.Content7 }}</li>
+                {% if item.Image7 %}
+                    <li><strong></strong> <img src="{{ item.Image7.url }}" alt="{{ item.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+        <div class="social-share-buttons">
+            <div class="facebook-share-button">
+                <i class="fab fa-facebook" style="color: #1877f2"></i>
+                <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button"
+                     data-size="small">
+                    <a target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&amp;src=sdkpreparse"
+                       class="fb-xfbml-parse-ignore">Share on Facebook</a>
+                </div>
+            </div>
+            <div class="twitter-share-button">
+                <img src="{% static 'images/zalo1.png' %}" alt="Logo"
+                     style="width: 25px; height: 25px; margin-right: 10px">
+                {#                <a target="_blank" href="https://zalo.me/{{user_avt.zalo}}">Share on Zalo</a>#}
+                <a target="_blank"
+                   href="https://zalo.me/share?url={{ request.build_absolute_uri }}/{{ user_avt.zalo }}">Share on
+                    Zalo</a>
+            </div>
+
+            <div class="twitter-share-button">
+                <i class="fab fa-twitter"></i>
+                <a target="_blank" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}">Tweet on
+                    Twitter</a>
+            </div>
+        </div>
+        <div class="h_r">
+            <p class="additional-text">TIN KHÁC</p>
+            <hr class="divider">
+        </div>
+
+        <div class="main_item_2">
+            {% for item in items %}
+                <a href="{% url 'post:newspaper' item.Items_id %}" class="newspaper-item_column_2">
+                    <div class="main_item_2_1">
+                        {% if item.Image1 %}
+                            <img src="{{ item.Image1.url }}" alt="Image 1">
+                        {% endif %}
+                    </div>
+                    <div class="main_item_2_2">
+                        <h2>{{ item.Title }}</h2>
+                        <p class="description">
+                            {% with words=item.Title1|wordcount %}
+                                {% if words > 10 %}
+                                    {{ item.Title1|slice:":100" }}...
+                                {% else %}
+                                    {{ item.Title1 }}
+                                {% endif %}
+                            {% endwith %}
+                        </p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

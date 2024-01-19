@@ -1,0 +1,597 @@
+{% extends 'quantri/base.html' %}
+ 
+    {% block conten%}
+
+    {% load static %}
+  
+    <link rel="stylesheet" href="{% static 'quantri/article_listt.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.min.js"></script>
+            <link
+                href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.css"
+                rel="stylesheet"
+                type="text/css"
+        />
+        
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+       
+    
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="columns">
+                <div class="column1">
+                    <div class="article-details">
+                        <h3 class="article-subtitle" style="font-family:'Times New Roman', serif;font-size: 25px; text-align: center;">{{ article.Title }}</h3>
+                        <p class="article-content" style=" opacity: 0.6;">{{ article.Content }}</p>
+                        
+                    </div>
+                    <div class="mucluc">
+                        <span id="toggle-button">Mục lục bài viết <span id="toggle-text" class="text_show_hide">(hiển thị)</span></span>
+
+                        <nav class="table-of-contents" role="navigation" aria-label="Mục lục">
+                            <ol>
+                                <li><a href="#fruit-heading">Nông sản</a></li>
+                                <li><a href="#region-heading">Vùng trồng</a></li>
+                                <li><a href="#location-heading">Địa Điểm trồng</a></li>
+                                <li><a href="#video-heading">Video</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                    
+                    <div class="mani">
+                        <div class="fruit-details">
+                            <!-- <h2 id="fruit-heading"><span class="fruit-heading">1.Trái cây</span></h2> -->
+                            <h3 class="fruit-name">1.Giới thiệu về {{ fruit.FruitName }}</h3>
+                            <p class="fruit-description">{{ fruit.Description }}</p>
+                            <p class="planting-time">Thời gian trồng: {{ fruit.PlantingTime }}</p>
+                            <p class="harvest-time">Thời gian thu hoạch: {{ fruit.HarvestTime }}</p>
+                            <p class="harvest-time">Diện tích trồng: {{ fruit.Quantity }} (m2)</p>
+                        </div>
+                        <div class="fruit-details">
+                            <!-- <h3 id="fruit-heading"><span class="fruit-heading">NỘI DUNG TRÁI CÂY</span></h3> -->
+                            <ul class="fruit_conte">
+                                {% for fruit in fruit_conte %}
+                                <li class="">
+                                    <p class="fruit-name">{{ fruit.title }}</p>
+                                    <p class="description">{{ fruit.content }}</p>
+                                    {% if fruit.image %}
+                                        <p class="image"><img src="{{ fruit.image.url }}" alt="" width="100%"></p>
+                                    {% endif %}
+            
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="growing-region-details">
+                            <h3 id="region-heading"><span class="region-heading">2.Vùng trồng  {{ growing_region.RegionName }}</span></h3>
+                            <!-- <p class="region-name">Tên vùng trồng: {{ growing_region.RegionName }}</p> -->
+                            <p class="region-description">{{ growing_region.Description }}</p>
+                            <p class="region-area">Diện tích: {{ growing_region.Area }} m²</p>
+                            <p class="region-product">Sản phẩm chính: {{ growing_region.MainProduct }}</p>
+                            <span>Có các địa điểm trồng nông sản như:</span>
+                            {% for location in all_locations  %}
+                                <li style="margin-left: 10px;"> {{location.Name}}</li>
+                            {%endfor%}
+                           
+                            <div>
+                                <div class="growing-region-details">
+                                    <h3 id="location-heading"><span class="region-heading">3.Địa Điểm trồng </span></h3>
+                                    <p>Địa chỉ: {{Location.Name}} </p>
+                                    <p>Kinh tuyến: {{Location.Latitude}}</p>
+                                    <p>Vĩ tuyến: {{Location.Longitude}}</p>
+                                    <p class="FruitType"> Phù hợp với loại cây trồng: {{Location.FruitType}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="image-details">
+                            <h3 id="video-heading"><span class="image-heading">4.Video</span></h3>
+                            <ul class="image-list">
+                               
+                                <ul class="video-container">
+                                    {% for event in videos %}
+                                        {% load static %}
+                                       
+                                            <!-- Hiển thị video nếu có -->
+                                            <div>
+                                                <video controls width="640" height="480" class="bright-video">
+                                                    <source src="{{event.VideoFile.url}}" type="video/mp4">
+                                                </video>
+                                                <span style="display: block; text-align: center;">{{ event.Title }}</span>
+                                            </div>
+                                    {% endfor %}
+                                </ul>
+                                
+                            </ul>
+                        </div>
+                        <p class="posting-date">Ngày đăng: {{ article.PostingDate }}</p>
+                    </div>
+                    <div class="inforUserArtice">
+                        <div class="column1">
+                            {% if user_avt.avatar %}
+                                <!-- Display user's avatar if available -->
+                                <img src="{{ user_avt.avatar.url }}" alt="User Avatar">
+                            {% else %}
+                                <img src="{% static 'images/avtdefaul.jpg' %}" alt="User Avatar">
+                            {% endif %}
+                                
+                            
+                            <div  class="social-icons">
+                                <a href="{{user_avt.fb}}" target="_blank">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                
+                                <!-- Liên kết Zalo -->
+                                <a href="https://zalo.me/{{user_avt.zalo}}" target="_blank">
+                                    <img src="{% static 'images/zalo1.png' %}" alt="Logo" style="width: 25px; height: 25px;">
+
+                                </a>
+                              
+                                <!-- Liên kết Điện thoại -->
+                                <a href="tel: {{user_avt.phone}}">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                               
+                            </div>
+                        </div>
+                        <div class="column2">
+                            {{user_article.username}}
+                            <P>Tác Giả</P>
+                            
+                            <div>
+                                <p>{{ user_avt.story }}</p>
+                            </div>
+                          
+                        </div> 
+                    </div>
+                    <div class="social-share-buttons">
+                        <div class="facebook-share-button">
+                            <i class="fab fa-facebook" style="color: #1877f2"></i>
+                            <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button"
+                                 data-size="small">
+                                <a target="_blank"
+                                   href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&amp;src=sdkpreparse"
+                                   class="fb-xfbml-parse-ignore">Share on Facebook</a>
+                            </div>
+                        </div>
+                        <div class="twitter-share-button">
+                            <img src="{% static 'images/zalo1.png' %}" alt="Logo"
+                                 style="width: 25px; height: 25px; margin-right: 10px">
+                           
+                            <a target="_blank"
+                               href="https://zalo.me/share?url={{ request.build_absolute_uri }}/{{ user_avt.zalo }}">Share on
+                                Zalo</a>
+                        </div>
+            
+                        <div class="twitter-share-button">
+                            <i class="fab fa-twitter"></i>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}">Tweet on
+                                Twitter</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h1>Bài viết liên quan</h1>
+                        <ul class="article-list"></ul>
+                            {% for page in related_articles %}
+
+                                <li class="article"> 
+                                    <div class="c1">
+                                        {% if page.Image %}
+                                        <img src="{{ page.Image.url }}" alt="" >
+                                        {% endif %}
+                                    </div>
+                                    <div class="c2">
+                                        <a href="{% url 'post:article_detail' page.ArticleID %}" class="article-title">{{ page.Title }}</a>
+                                        <p class="article-content">{{ page.Content }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            {% if related_articles|length == 0 %}
+                                <p>Không có dữ liệu bài viết nào.</p>
+                        {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="column2">
+                    <section>
+                        <div id="map"></div>
+                        <div id="locations" data-locations="{{ location_json }}"></div>
+                        <div id="all_location" data-all_locations_info="{{ all_locations_info }}"></div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comments-container">
+            <h2 class="comments-heading">Bình luận</h2>
+            <ul class="comment-list">
+            {% for feedback in feedbacks %}
+                {% if feedback.ParentFeedback == null %}
+                    <li class="comment-item" id="{{feedback.FeedbackID}}"> 
+                        <div class="comment-header">
+                            <div class="user-avatar">
+                                {% if feedback.User.useravatar.avatar %}
+                                    <img src="{{ feedback.User.useravatar.avatar.url }}" width="20px" height="20px" alt="User Avatar">
+                                    {% if request.user == feedback.User %}
+                                    <a href="{% url 'post:get_user_articles' request.user.id %}" class="edit-avatar-link">
+                                        Bạn
+                                    </a>
+                                    {% endif %}
+                                {% else %}
+                                    {% if request.user == feedback.User %}
+                                    <a href="{% url 'post:get_user_articles' request.user.id %}"> Bạn </a>
+                                    {% else %}
+                                    <img src="{% static 'images/avtdefaul.jpg' %}" width="20px" height="20px"
+                                        alt="Default Avatar">
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <p class="comment-time">Thời gian: {{ feedback.ResponseDate }}</p>
+                        </div>
+                        <p class="comment-content" >
+                            <strong>{{ feedback.User.username }}:</strong> {{ feedback.Content }}
+                        </p>
+
+                        <!-- Thêm nút sửa và xóa -->
+                        <div class="comment-actions">
+                            {% if request.user.is_authenticated %}
+                            <a href="javascript:void(0);" data-id="{{ feedback.FeedbackID }}"
+                                class="reply-comment-link">Phản hồi</a>
+                            {% endif %}
+                            {% if request.user == feedback.User %}
+                            <a href="javascript:void(0);" data-id="{{ feedback.FeedbackID }}"
+                                class="edit-comment-link">Sửa</a>
+                            <a href="{% url 'post:delete_comment' feedback.FeedbackID %}"
+                                class="delete-comment-link">Xóa</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endif %}
+
+                <!-- Hiển thị phản hồi cho bình luận gốc -->
+                {% for response in feedback.responses.all %}
+                    <ul class="comment-reply-list" >
+                        <li class="comment-item response" id="{{response.FeedbackID}}">
+                            <div class="comment-header">
+                                <div class="user-avatar">
+                                    
+                                    {% if response.User.useravatar.avatar %} 
+                                        <!-- nếu tồn tại avt thì hiển thị avt-->
+                                        <img src="{{ response.User.useravatar.avatar.url }}" width="20px" height="20px"
+                                            alt="User Avatar">
+                                        {% if request.user == response.User %}
+                                        <!-- nếu người đang dùng là ng cmt thì hiển thị nút chỉnh sửa-->
+                                            <a href="{% url 'post:get_user_articles' request.user.id %}" class="edit-avatar-link">
+                                                Bạn
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <!-- ngược lại nếu ko có avt -->
+                                        {% if request.user == response.User %}
+                                        <!-- nếu người đang dùng là ng cmt thì hiển thị nút chỉnh sửa-->
+                                        <a href="{% url 'post:get_user_articles' request.user.id %}"> Bạn </a>
+                                        {% else %}
+                                        <!-- ngược lại hiển thị avt mặc định-->
+                                        <img src="{% static 'images/avtdefaul.jpg' %}" width="20px" height="20px"
+                                            alt="Default Avatar">
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <p class="comment-time">Thời gian: {{ response.ResponseDate }}</p>
+                            </div>
+                            <p class="comment-content"  >
+                                <strong>{{ response.User.username }}:</strong>
+                                {% if response.ParentFeedback %}
+                                Trả lời cho <strong>{{ response.ParentFeedback.User.username }}:</strong>
+                                {% endif %}
+                                {{ response.Content }}
+                            </p>
+                            <!-- Thêm nút "Phản hồi" cho phản hồi -->
+                            <div class="comment-actions">
+                                {% if request.user.is_authenticated %}
+                                <a href="javascript:void(0);" data-id="{{ response.FeedbackID }}"
+                                    class="reply-comment-link">Phản hồi</a>
+                                {% endif %}
+                                {% if request.user == response.User %}
+                                <a href="javascript:void(0);" data-id="{{ response.FeedbackID }}"
+                                    class="edit-comment-link">Sửa</a>
+                                <a href="{% url 'post:delete_comment' response.FeedbackID %}"
+                                    class="delete-comment-link">Xóa</a>
+                                {% endif %}
+                            </div>
+                        
+                        </li>
+                    </ul>
+                {% endfor %}
+                <!-- Kết thúc vòng lặp cho phản hồi -->
+            {% endfor %}
+            </ul>
+            <div class="add-comment-form" style="display: none; ">
+                <h3>Thêm Phản Hồi</h3>
+                <form method="post" action="{% url 'post:add_comment' article.ArticleID %}">
+                    {% csrf_token %}
+                    {{ feedback_form.as_p }}
+                    <input type="hidden" id="EditCommentID" name="EditCommentID" value="">
+                    <button type="submit" class="submit-comment">Gửi Phản Hồi</button>
+                </form>
+            </div>
+            <!-- Form để chỉnh sửa bình luận -->
+            <div class="edit-comment-form" style="display: none;">
+                <h3>Chỉnh Sửa Bình Luận</h3>
+                <form method="post" action="{% url 'post:edit_comment' %}">
+                    {% csrf_token %}
+                    {{ feedback_form.as_p }}
+                    <input type="hidden" name="EditCommentID" value="" class="edit-comment-id">
+                    <button type="submit" class="submit-comment">Lưu</button>
+                </form>
+            </div>
+        
+            <!-- Form để thêm bình luận mới -->
+            <div class="add-comment-form">
+                <h3>Thêm Bình Luận Mới</h3>
+                <form method="post" action="{% url 'post:add_comment' article.ArticleID %}">
+                    {% csrf_token %}
+                    {{ feedback_form.as_p }}
+                    <input type="hidden" id="EditCommentID" name="EditCommentID" value="">
+                    <button type="submit" class="submit-comment">Gửi Bình Luận</button>
+                </form>
+            </div>
+        </div>
+        
+    </body>
+
+    <!-- Thêm biểu mẫu chỉnh sửa bình luận (đã thay đổi ID và action) -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var toggleButton = document.getElementById("toggle-button");
+        var tableOfContents = document.querySelector(".table-of-contents");
+
+        toggleButton.addEventListener("click", function () {
+            if (tableOfContents.style.display === "none") {
+                tableOfContents.style.display = "block";
+                document.getElementById("toggle-text").innerText = "(thu gọn)";
+            } else {
+                tableOfContents.style.display = "none";
+                document.getElementById("toggle-text").innerText = "(hiển thị)";
+            }
+        });
+    });
+</script>
+<script>
+    //===========hiển thị bình luận thông báo (dòng 228 )=================
+        function trangDuocTaiLen() {
+
+            // Lấy URL của trang web hiện tại
+            var currentURL = window.location.href;
+
+            // Kiểm tra xem currentURL có tồn tại không
+            if (currentURL) {
+                // Kiểm tra nếu URL chứa "/article_notifications/"
+                if (currentURL.includes("/article_notifications/")) {
+                    // Loại bỏ dấu / cuối cùng của URL
+                    var hrefValue = currentURL.replace(/\/$/, '');
+
+                    // Trích xuất ID của comment từ URL
+                    var commentID = hrefValue.split('/').pop(); // tách chuỗi bằng / và .pop() lấy phần tử cuối cùng 
+                    console.log('Comment ID:', commentID);
+
+                    // Tìm phần tử của comment dựa trên ID
+                    var commentElement = document.getElementById(commentID);
+
+                    // Kiểm tra xem phần tử comment có tồn tại không
+                    if (commentElement) {
+                      
+                        var commentPosition = commentElement.offsetTop;
+
+                        //ăn css class highlighted-comment
+                        commentElement.classList.add('highlighted-comment');
+
+                        
+                        var scrollToPosition = commentPosition - 200;
+
+                        // Cuộn tới vị trí tính toán được
+                        window.scrollTo({
+                            top: scrollToPosition,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        console.log('Không tìm thấy phần tử với ID:', commentID);
+                    }
+                } else {
+                    console.log('URL không chứa "/article_notifications/"');
+                }
+            } else {
+                console.log('URL không tồn tại.');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", trangDuocTaiLen);
+
+   
+        //===========chỉnh sửa cmt============
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const editCommentLinks = document.querySelectorAll(".edit-comment-link");
+            const editCommentForm = document.querySelector(".edit-comment-form");
+            const editCommentIDInput = editCommentForm.querySelector(".edit-comment-id");
+
+            editCommentLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    const feedbackID = link.getAttribute("data-id");
+                    editCommentIDInput.value = feedbackID;
+                    editCommentForm.style.display = "block";
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            // Xử lý sự kiện khi người dùng nhấn nút "Phản hồi"
+            $('.reply-comment-link').click(function () {
+                // Lấy ID của bình luận cha
+                var commentID = $(this).data('id');
+
+                // Hiển thị biểu mẫu phản hồi
+                $('.add-comment-form').show();
+
+                // Đặt giá trị trường ẩn "EditCommentID" với ID của bình luận cha
+                $('#EditCommentID').val(commentID);
+            });
+        });
+
+
+</script>
+<style>
+   .custom-marker {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        border: 1px solid #000;
+        background-color: blue;  
+    } 
+    #map h3{
+        width: 150px;
+        text-align: center;
+    }
+    /* Màu xanh cho 'Ngắn ngày' */
+    .ngan-ngay {
+        background-color: #00FF00;
+    }
+
+    /* Màu vàng cho 'Trung ngày' */
+    .trung-ngay{
+        background-color: #FFFF00;
+    }
+
+    /* Màu đỏ cho 'Dài ngày' */
+    .dai-ngay {
+        background-color: #FF0000;
+    }
+</style>
+<script>
+    const locationsJsonString = document.getElementById('locations').getAttribute('data-locations');
+    const allLocationsJsonString = document.getElementById('all_location').getAttribute('data-all_locations_info');
+
+    const locationsData = JSON.parse(locationsJsonString);
+    const allLocationsData = JSON.parse(allLocationsJsonString);
+
+    goongjs.accessToken = 'wnicbAmnNkoMHNYUKWnlFHezV189FjmMwkNJ7hKW';
+    var map = new goongjs.Map({
+        container: 'map',
+        style: 'https://tiles.goong.io/assets/goong_map_web.json',
+        center: [locationsData.longitude, locationsData.latitude],
+        zoom: 5
+    });
+
+    map.addControl(new goongjs.NavigationControl());
+
+    const markers = [];
+    const allMarkers = [];
+
+    // Thêm điểm đánh dấu màu đỏ cho vị trí chính
+    const mainMarker = new goongjs.Marker({color: 'red'})
+        .setLngLat([locationsData.longitude, locationsData.latitude])
+        .setPopup(new goongjs.Popup()
+            .setHTML(`
+                <h3>${locationsData.name}</h3> 
+                <p>Kinh tuyến: ${locationsData.latitude}</p> 
+                <p> Vĩ tuyến: ${locationsData.longitude}</p>
+                <p> Cây trồng: {{fruit.FruitName}}</p>
+                <h3>${locationsData.FruitType}</h3>
+                
+                
+                `)
+        )
+        .addTo(map);
+
+    map.on('load', () => {
+        map.addLayer({
+            // id: 'custom-marker',
+            type: 'circle',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: [{
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [locationsData.longitude, locationsData.latitude]
+                        }
+                    }]
+                }
+            },
+            paint: {
+                'circle-radius': 20,
+                'circle-color': 'red',
+                'circle-opacity': 0.7,
+                'circle-blur': 1
+            }
+        });
+    });
+
+
+    // Thêm điểm đánh dấu màu xanh cho tất cả các vị trí khác
+    allLocationsData.forEach(location => {
+        if (location.latitude !== locationsData.latitude || location.longitude !== locationsData.longitude) {
+            // Kiểm tra xem vị trí hiện tại có phải là vị trí chính hay không
+            allMarkers.push({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [location.longitude, location.latitude]
+                },
+                properties: {
+                    title: location.location_name,
+                    description: `Kinh tuyến: ${location.latitude}<br> Vĩ tuyến: ${location.longitude}`,
+                    fruitType: location.FruitType,
+                    fruit_name: location.fruit_name,
+                    id: location.id_article,
+
+                }
+            });
+        }
+    });
+    // Sử dụng biến allMarkers để tạo các điểm đánh dấu cho tất cả các vị trí khác
+    allMarkers.forEach(marker => {
+        const properties = marker.properties;
+
+        const customMarker = new goongjs.Marker({ element: createCustomMarkerElement() })
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(new goongjs.Popup()
+                .setHTML(`<h3>${properties.title}
+                </h3><p>${properties.description}</p>
+                <p> Cây trồng: ${properties.fruit_name}</p>
+                <h3>${properties.fruitType}</h3>
+                <a href="/article_detail/${properties.id}">Xem bài viết </a> 
+                
+                `)
+            )
+            .addTo(map);
+
+        customMarker.getElement().classList.add(properties.fruitType);
+       
+        // customMarker.getElement().classList.add('custom-marker');
+    });
+
+    function createCustomMarkerElement() {
+        const customMarker = document.createElement('div');
+        customMarker.className = 'custom-marker';
+        return customMarker;
+    }
+</script>
+
+
+
+{% endblock %}

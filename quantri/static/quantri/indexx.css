@@ -1,0 +1,404 @@
+body {
+    
+    margin: 0; /* Loại bỏ margin mặc định */
+    padding: 0; /* Loại bỏ padding mặc định */
+    font-family: "Times New Roman", sans-serif; /* Chọn font chung cho trang web */
+    padding-left: 50px;
+    padding-right: 50px;
+    
+ }
+ .container {
+    display: flex;
+ }
+
+.column2 li{
+   list-style-type: none;
+}
+ a:hover{
+    color: #f204049e;
+    
+    
+ }
+ /* Tùy chỉnh kiểu dáng cho class article */
+ .column2{
+    flex: 2;
+ }
+ .column1{
+    flex: 1;
+ }
+ .column2 section{
+    margin-left: 0;
+ }
+
+.column2 a{
+    
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    color: #111111;
+
+    display: -webkit-box;            /* Hiển thị phần tử dưới dạng box */
+    -webkit-line-clamp: 2;          /* Giới hạn số dòng là 3 */
+    -webkit-box-orient: vertical;   /* Hiển thị dọc theo chiều dọc */
+    overflow: hidden;               /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis;                /* Giới hạn chiều rộng tối đa của phần tử */
+    
+}
+h4 {
+    text-align: center;
+}
+section .creat_articles {
+    margin-left: 70%;
+    background-color: #177b28a0;
+}
+.column2 li{
+    text-decoration: none;
+}
+.column2 h2{
+
+    font-size: 24px;
+    color: #03932a;
+    font-weight: 500;
+
+ }
+.article {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px;
+    border: 1px solid #E6E6E6;
+    margin-bottom: 20px;
+    
+}
+.article:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+.article img {
+    transition: transform 0.3s ease; /* Thêm transition cho hình ảnh */
+}
+
+.article:hover img {
+    transform: scale(1.1); /* Ví dụ: tăng kích thước hình ảnh khi hover */
+}
+
+.article img {
+    width: 170px;
+    height: 100px;
+    margin-right: 20px; /* Khoảng cách giữa ảnh và nội dung */
+  }
+
+.article-content {
+    display: -webkit-box;            /* Hiển thị phần tử dưới dạng box */
+    -webkit-line-clamp: 3;          /* Giới hạn số dòng là 3 */
+    -webkit-box-orient: vertical;   /* Hiển thị dọc theo chiều dọc */
+    overflow: hidden;               /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis;                /* Giới hạn chiều rộng tối đa của phần tử */
+}
+
+
+/* Tùy chỉnh kiểu dáng cho class article-title */
+.article-title {
+    text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+    color: #333; /* Màu văn bản */
+    font-weight: bold; /* Đậm */
+    margin-right: 10px; /* Khoảng cách giữa tiêu đề và nội dung */
+  }
+
+
+/* Tùy chỉnh kiểu dáng cho class article-content */
+
+/* Phần CSS cho phân trang */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.step-links {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.step-links a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    text-decoration: none;
+    color: #333;
+}
+
+.step-links a:hover {
+    background-color: #ddd;
+}
+
+.current-page {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Ẩn các liên kết tiến và lùi nếu không có trang tiền hoặc sau */
+.step-links a[disabled] {
+    display: none;
+}
+
+.horizontal-list {
+    list-style-type: square; /* Đặt giá trị "square" cho dấu chấm danh sách */
+    margin: 3px;
+    display: flex; /* Sử dụng hiển thị flex để các phần tử con hiển thị theo chiều ngang */
+}
+
+.horizontal-list li {
+    
+    color: rgb(255, 0, 0); /* Màu cho dấu chấm */
+    margin-right: 10px; /* Khoảng cách giữa các phần tử trong danh sách */
+    padding-right: 20px;
+}
+.horizontal-list a {
+    text-decoration: none; /* Bỏ gạch dưới cho thẻ <a> trong danh sách */
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+   
+}
+.LinkSlide {
+    border-bottom: 1px solid #C3D0E0 ;
+    margin-top: 1px; 
+    margin-bottom: 15px;
+   
+}
+  /*-------------- CSS mapppppp -------------*/
+  .column1 h3{
+    padding: 5px;
+    font-family: Merriweather;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 21px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #182940;
+    background-color: #7a828d93;
+    margin-left: 20px; 
+ 
+ }
+ .column1 a{
+    text-decoration: none;
+    text-align: center;
+    display: block;
+ }
+ .column1{
+    right: 0;
+ }
+ #map {
+    width: 95%;
+    height: 350px;
+    margin-left: 20px;
+    padding-left: 20px;
+    padding: 0;
+ }
+ .legend {
+    display: flex; /* Sử dụng flexbox để xếp các hình vuông ngang hàng */
+    justify-content: space-between; /* Canh lề hai bên của các hình vuông */
+    align-items: center; /* Canh lề theo chiều dọc để căn giữa */
+    margin-top: 10px; /* Khoảng cách từ bản đồ */
+    padding-left: 20px;
+}
+.legend div {
+    display: flex;
+    align-items: center;
+   
+}
+
+.legend .legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 3px;
+}
+.legend-item span{
+    margin-left: 5px;
+}
+
+/* Màu xanh cho 'Ngắn ngày' */
+.ngan-ngay {
+    background-color: #00FF00;
+}
+
+/* Màu vàng cho 'Trung ngày' */
+.trung-ngay{
+    background-color: #FFFF00;
+}
+
+/* Màu đỏ cho 'Dài ngày' */
+.dai-ngay {
+    background-color: #FF0000;
+}
+
+/* Lớp chung cho điểm đánh dấu */
+.custom-marker {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+.custom-markers{
+    width: 267px;
+    height: 1000px;
+    background-color: #04d1e3;
+    
+    border-radius: 50%;
+    border: 1px solid #04d1e3;
+}
+/*---------- mùa vụ----------- */
+table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.clum3{
+    width: 210px;
+}
+.conten{
+    font-weight: bold;
+}
+
+.header{
+    display: flex;
+}
+.header h2{
+    flex: 7; left: 0;
+
+}
+.header a{
+    flex: 3;
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    text-decoration: none;
+    margin-right: 10px;
+    padding: 3px;
+    color: #03932a;
+}
+.header a:hover{
+    color: red;
+}
+/* giá cả nông sản  */
+.price{
+    margin-left: 20px;
+    max-height: 436px;
+    overflow-y: auto;
+}
+.price P {
+    text-align: center;
+    /* color: #333; */
+    font-weight: bolder;
+}
+
+.price table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+    
+}
+
+.price th, td {
+    border: 0.5px solid #6837379f;
+    padding: 8px;
+    text-align: center;
+}
+
+.price th {
+   
+    background-color: #f2f2f2;
+}
+
+.price tr:nth-child(even) {
+    background-color: #f9f9f9c9;
+}
+
+.price tr:hover {
+    background-color: #f5f5f5;
+}
+#map .mapboxgl-control-container {
+    display: none;
+}
+
+/*SẢN VÂT*/
+
+.itme-list_index {
+    list-style: none; /* Loại bỏ dấu chấm của danh sách */
+    padding: 0; /* Loại bỏ phần padding mặc định của danh sách */
+    display: flex; /* Sử dụng flexbox để sắp xếp các mục ngang */
+    flex-wrap: wrap; /* Cho phép các mục xuống dòng khi không còn không gian */
+    
+}
+
+.tme-list_a {
+    width: 30%; /* Đặt chiều rộng của mỗi mục (có thể điều chỉnh theo ý muốn của bạn) */
+    margin: 1%; /* Tạo khoảng trắng giữa các mục */
+    box-sizing: border-box; /* Đảm bảo rằng padding và border không làm tăng kích thước thực tế của phần tử */
+}
+
+.article-title {
+    text-decoration: none; /* Loại bỏ đường gạch chân của liên kết */
+    color: #333; /* Màu văn bản của tiêu đề */
+    font-weight: bold; /* In đậm tiêu đề */
+    display: block; /* Biến tiêu đề thành khối để có thể thêm margin hoặc padding */
+}
+
+/* Nếu bạn muốn canh giữa ảnh trong mỗi mục, bạn có thể sử dụng margin auto. */
+.tme-list_a img {
+    display: block; /* Đảm bảo ảnh không bị thay đổi kích thước do display:inline */
+    margin: auto; /* Canh giữa ảnh */
+}
+
+.newspaper-list {
+    /*width: 70%;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.newspaper-list_1 {
+    flex-basis: 30%; /* Chiều rộng cố định của cột 1 */
+}
+
+.newspaper-list_2 {
+    flex-basis: 40%;
+}
+
+.newspaper-list_3 {
+    flex-basis: 25%;
+}
+
+.newspaper-list_1 img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+}
+
+.newspaper-title {
+    font-size: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    transition: color 0.3s, opacity 0.3s; /* Thêm hiệu ứng màu và độ mờ */
+}
+.newspaper-title1 {
+    font-size: 15px;
+    color: #333;
+    opacity: 0.6;
+    text-decoration: none; 
+}

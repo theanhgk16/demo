@@ -1,0 +1,51 @@
+<html>
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>HeatMap</title>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+            <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+            <style>
+                /* Add CSS styles for your map container here */
+                #map {
+                    height: 900px;
+                    width: 800px;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="map"></div>
+
+            <script>
+                var lat = 16.047;
+                var lng = 108.206;
+                var zoom = 6;
+
+                // Sample dataset
+                var dataset = [
+                    { DELIVERY_WARD_LATITUDE: 20.98, DELIVERY_WARD_LONGITUDE: 105.81, DEMAND: 10 },
+                    { DELIVERY_WARD_LATITUDE: 20.99, DELIVERY_WARD_LONGITUDE: 105.82, DEMAND: 15 },
+                    // Add more data points here
+                ];
+
+                var map = L.map('map').setView([lat, lng], zoom);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 20,
+                }).addTo(map);
+
+                var heatData = dataset.map(function(item) {
+                    return [item.DELIVERY_WARD_LATITUDE, item.DELIVERY_WARD_LONGITUDE, item.DEMAND];
+                });
+
+                L.heatLayer(heatData, {
+                    minOpacity: 0.6,
+                    blur: 20,
+                    maxZoom: 19,
+                    radius: 15,
+                    gradient: { 0.4: 'yellow', 0.65: 'yellow', 1: 'red' }
+                }).addTo(map);
+            </script>
+        </body>
+        </html>

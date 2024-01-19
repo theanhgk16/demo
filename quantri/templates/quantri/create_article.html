@@ -1,0 +1,295 @@
+{% extends 'quantri/base.html' %}
+{% block conten%}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Article</title>
+    <link rel="stylesheet" href="{% static 'quantri/create_articlee.css' %}">
+    <!-- Gắn các tệp CSS và JS của Leaflet vào trang -->
+    <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.min.js"></script>
+    <link
+        href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.css"
+        rel="stylesheet"
+        type="text/css"
+    />
+
+    <!-- Promise polyfill script is required -->
+    <!-- to use Goong Geocoder in IE 11. -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+   
+
+</head>
+<body>
+    <h2>Đóng Góp Bài Viết</h2>
+    
+    <div class="messages">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+<div class="container">
+    <form method="post" enctype="multipart/form-data" id="myForm" style="background-color: #f0f0f0">
+        {% csrf_token %}
+        <!-- các trường bài viết -->
+        <div class="content">
+            <p>Điền thông tin về bài viết: </p>
+            <label for="title">Tiêu đề:</label>
+            <input type="text" name="title" id="title" required value="{{ session.title }}">
+            <br>
+            <label for="imageInput">Ảnh:</label>
+            <input type="file" id="imageInput" name="ImageArtice" required >
+            
+            <label for="content">Nội dung:</label>
+            <textarea name="content" id="content" required value="{{ session.content }}"></textarea>
+            <br>
+            <!-- các trường về vùng -->
+            <label> Chọn vùng trồng:
+            <select id="id_vung_trong" name="selected_region" required>
+                <option value="">Chọn vùng</option>
+                {% for growing_region in growing_regions %}
+                    <option value="{{ growing_region.GrowingRegionID }}">{{ growing_region.RegionName }}</option>
+                {% endfor %}
+                
+            </select >
+            <a href="{% url 'post:create_growing_region'%}"><i class="fa-solid fa-plus"></i></a>
+            </label>
+            
+            <!-- <label for="RegionName">Tên Vùng:</label>
+            <input type="text" name="RegionName" id="RegionName">
+            <br>
+            <label for="Description">Mô Tả Vùng:</label>
+            <input type="text" name="RegionDescription" id="RegionDescription">
+            <br>
+            <label for="Area">Diện tích trồng:</label>
+            <input type="number" name="RegionArea" id="RegionArea">
+            <br>
+            <label for="MainProduct">Trái cây chính:</label>
+            <input type="text" name="RegionMainProduct" id="RegionMainProduct">
+            <br> -->
+            <p> Điền thông tin địa điểm trồng: </p>
+            <label for="Name">Tên địa điểm:</label>
+            <input type="text" name="LocationName" id="LocationName" required>
+            <br>
+            <input type="hidden" name="Latitude" id="Latitude" value="" required>
+            <input type="hidden" name="Longitude" id="Longitude" value="" required>
+            <br>
+            <button type="button" style="margin: auto; display: block;" ">Click vào bản đồ để chọn vị trí. <br>
+                Vui lòng chọn địa điểm thuộc vùng đã chọn nhé.
+            </button>
+            <div id="map" style="height: 400px; width: 400px; margin: auto;" ></div>
+            <br>
+            <div class="form-group">
+                <label for="FruitType">Loại cây:
+                    <select name="FruitType" id="FruitType" required>
+                        <option value="ngan-ngay">Ngắn ngày</option>
+                        <option value="trung-ngay">Trung ngày</option>
+                        <option value="dai-ngay">Dài ngày</option>
+                    </select>
+                </label>
+            </div>
+            
+            
+            <p>Điền thông tin về trái cây: </p>
+            <label for="FruitName">Tên:</label>
+            <input type="text" name="FruitName" id="FruitName" required>
+            <br>
+            <label for="FruitDescription">Mô tả trái cây:</label>
+            <textarea name="FruitDescription" id="FruitDescription" required></textarea>
+            <!-- <input type="text" name="FruitDescription" id="FruitDescription" required> -->
+            <br>
+            <label for="PlantingTime">Ngày trồng:</label>
+            <input type="date" id="PlantingTime" name="PlantingTime" required>
+            <br>
+            <label for="HarvestTime">Ngày thu hoạch:</label>
+            <input type="date" id="HarvestTime" name="HarvestTime" required>
+            <label id="dateError" style="color: red; " ></label> <!-- Thêm một span để hiển thị thông báo lỗi -->
+            <br>
+            <label for="quantity">Diện tích trồng(m2):</label>
+            <input type="number" id="quantity" name="quantity" step="1" min="0" required>
+            <br>
+            <!-- <p>Nội dung </p>
+            <label for="FruitName">Tiêu đề:</label>
+            <input type="text" name="FruitTile" id="FruitName" required>
+            <label for="FruitName">Nội Dung:</label>
+            <textarea name="FruitConten" id="FruitConten" required></textarea>
+            <label for="FruitName">Ảnh:</label>
+            <input type="file" id="FruitName" name="FruitName" required> -->
+            
+            <div id="fruitForms">
+                <!-- Mẫu ban đầu -->
+                <div class="fruit-form">
+                    <p>Nội dung 1</p>
+                    <label for="FruitName">Tiêu đề:</label>
+                    <input type="text" name="FruitTile1" required>
+                    <label for="FruitName">Nội Dung:</label>
+                    <textarea name="FruitConten1" required></textarea>
+                    <label for="FruitName">Ảnh:</label>
+                    <input type="file" name="FruitName1" >
+                </div>
+            </div>
+            
+            <input type="hidden" id="numForms" name="num_forms" value="1">
+            <p id="addButton" onclick="addFruitForm()" ">Thêm nội dung</p>
+            
+            <script>
+                // Biến để theo dõi số lượng form đã thêm
+                var currentFormIndex = 1;
+            
+                // Hàm để thêm một form mới khi được gọi
+                function addFruitForm() {
+                    // Kiểm tra xem đã thêm tối đa 4 form chưa
+                    if (currentFormIndex <= 4) {
+                        // Lấy thẻ chứa các form
+                        var fruitForms = document.getElementById('fruitForms');
+            
+                        // Tạo một thẻ div mới cho form
+                        var newForm = document.createElement('div');
+                        newForm.className = 'fruit-form';
+            
+                        // Tăng chỉ số của form hiện tại
+                        currentFormIndex++;
+            
+                        // Cập nhật giá trị trường ẩn để lưu số lượng form đã thêm
+                        document.getElementById('numForms').value = currentFormIndex;
+            
+                        // Thêm nội dung và các trường input vào form mới
+                        newForm.innerHTML = `
+                            <p>Nội dung ${currentFormIndex}</p>
+                            <label for="FruitName">Tiêu đề:</label>
+                            <input type="text" name="FruitTile${currentFormIndex}" required>
+                            <label for="FruitName">Nội Dung:</label>
+                            <textarea name="FruitConten${currentFormIndex}" required></textarea>
+                            <label for="FruitName">Ảnh:</label>
+                            <input type="file" name="FruitName${currentFormIndex}" >
+                            <button type="button" onclick="removeFruitForm(this)">Xóa</button>
+                        `;
+            
+                        // Thêm form mới vào danh sách các form
+                        fruitForms.appendChild(newForm);
+                    } else {
+                        // Hiển thị thông báo khi đã thêm đủ 5 form
+                        alert("Bạn đã thêm đủ 5 cặp trường thông tin.");
+                    }
+                }
+                // Hàm để xóa form khi được gọi
+                function removeFruitForm(button) {
+                    // Lấy thẻ div chứa form từ nút xóa được nhấn
+                    var formContainer = button.parentNode;
+
+                    // Lấy thẻ chứa tất cả các form
+                    var fruitForms = document.getElementById('fruitForms');
+
+                    // Xóa form khỏi danh sách các form
+                    fruitForms.removeChild(formContainer);
+
+                    // Giảm chỉ số của form hiện tại
+                    currentFormIndex--;
+
+                    // Cập nhật giá trị trường ẩn để lưu số lượng form đã thêm
+                    document.getElementById('numForms').value = currentFormIndex;
+                }
+            </script>
+            
+      
+           
+            <p>Điền thông tin về videos liên quan đến trái cây:</p>
+            <label for="video">Chọn video (tối đa 3 videos):</label>
+            <input type="file" name="video" accept="video/*" multiple>
+            <br>
+            <label for="Title_video">Tên:</label>
+            <input type="text" id="Title_video" name="Title_video">
+            <br>
+        </div>
+        
+        <br>
+        <script>
+            goongjs.accessToken = 'ItuJ0fjOr47yyCV7PPFIrqQ8dlDaxQNaCfIdxP8U';
+            var map = new goongjs.Map({
+                container: 'map',
+                style: 'https://tiles.goong.io/assets/goong_map_web.json',
+                center: [105.71366, 16.26566],
+                zoom: 4
+            });
+
+            // Add the control to the map.
+            map.addControl(
+                new GoongGeocoder({
+                    accessToken: 'PDYJ9HcYG0hIx998OoH85Ab1nzBSncvaEoidMWxb',
+                    goongjs: goongjs
+                })
+            );
+
+                
+
+            var marker = new goongjs.Marker()
+                .setLngLat([0, 0]) // Khởi tạo marker tại vị trí (0, 0)
+                .addTo(map);
+
+            map.on('click', function(e) {
+                var latitude = e.lngLat.lat;
+                var longitude = e.lngLat.lng;
+
+                document.getElementById('Latitude').value = latitude;
+                document.getElementById('Longitude').value = longitude;
+
+                marker.setLngLat([longitude, latitude]);
+            });
+                    
+        </script>
+       
+        <input type="submit" value="Thêm bài viết">
+    </form>
+    <script>
+        document.getElementById("PlantingTime").addEventListener("input", function() {
+            validateDate();
+        });
+
+        document.getElementById("HarvestTime").addEventListener("input", function() {
+            validateDate();
+        });
+
+        function validateDate() {
+            var plantingDate = new Date(document.getElementById("PlantingTime").value);
+            var harvestDate = new Date(document.getElementById("HarvestTime").value);
+            var dateErrorSpan = document.getElementById("dateError");
+
+            if (plantingDate >= harvestDate) {
+                dateErrorSpan.innerText = "Ngày trồng phải trước ngày thu hoạch.";
+            } else {
+                dateErrorSpan.innerText = "";
+            }
+        }
+    </script>
+    <script>
+        // Lưu giá trị khi trang bị thoát
+        window.addEventListener('beforeunload', function () {
+            sessionStorage.setItem('title', document.getElementById('title').value);
+            sessionStorage.setItem('content', document.getElementById('content').value);
+           
+
+        });
+    
+        // Khôi phục giá trị khi trang được tải
+        window.addEventListener('load', function () {
+            document.getElementById('title').value = sessionStorage.getItem('title') || '';
+            document.getElementById('content').value = sessionStorage.getItem('content') || '';
+            
+
+        });
+    </script>
+    
+    
+</div>
+ 
+</body>
+</html>
+{% endblock%}

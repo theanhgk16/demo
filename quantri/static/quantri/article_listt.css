@@ -1,0 +1,512 @@
+.article-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.column1{
+    float: right;
+    margin-left: 10px;
+}
+.article-subtitle {
+    font-size: 20px;
+}
+.mani{
+    width: 100%;
+}
+.article-content {
+    font-size: 16px;
+}
+.content{
+    padding-bottom: 100px;
+}
+.posting-date {
+    font-style: italic;
+    color: #777;
+}
+
+/* Định dạng vùng trồng */
+.region-heading {
+    font-size: 20px;
+}
+
+.region-name {
+    font-weight: bold;
+}
+
+.region-description {
+    margin-top: 10px;
+}
+
+.region-address,
+.region-area,
+.region-product {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Định dạng thông tin trái cây */
+.fruit-heading {
+    font-size: 20px;
+}
+
+.fruit-name {
+    font-weight: bold;
+}
+
+.fruit-description {
+    margin-top: 10px;
+}
+
+.planting-time,
+.harvest-time {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Định dạng hình ảnh */
+.image-heading {
+    font-size: 20px;
+}
+
+.image-list {
+    list-style: none;
+    padding: 0;
+}
+
+.image-item {
+    margin-bottom: 20px;
+}
+
+.image-description {
+    font-style: italic;
+    color: #777;
+}
+
+.image-container {
+    text-align: center;
+}
+
+
+
+/* Định dạng hộp thông báo */
+.custom-message-box {
+    width: 300px; /* Độ rộng của hộp thông báo */
+    margin: 20px auto; /* Canh giữa hộp thông báo */
+    text-align: center; /* Canh giữa nội dung trong hộp thông báo */
+}
+
+/* Định dạng các loại thông báo (ví dụ: success, error, info, warning) */
+.custom-message {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.custom-message.success {
+    background-color: #4CAF50; /* Màu nền thông báo thành công */
+    color: white; /* Màu văn bản của thông báo thành công */
+}
+
+.custom-message.error {
+    background-color: #f44336; /* Màu nền thông báo lỗi */
+    color: white; /* Màu văn bản của thông báo lỗi */
+}
+
+.custom-message.info {
+    background-color: #2196F3; /* Màu nền thông báo thông tin */
+    color: white; /* Màu văn bản của thông báo thông tin */
+}
+
+.custom-message.warning {
+    background-color: #ff9800; /* Màu nền thông báo cảnh báo */
+    color: white; /* Màu văn bản của thông báo cảnh báo */
+}
+/* Các kiểu chung */
+.comments-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.comment-reply-list {
+    margin-left: 20px;  /* Thụt lề phản hồi so với bình luận gốc */
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    
+}
+.comment-list a{
+    text-decoration: none;
+}
+
+.comment-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    list-style: none;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    margin-right: 10px;
+}
+
+.user-avatar img {
+    border-radius: 50%;
+}
+
+.comment-time {
+    font-size: 12px;
+    color: #888;
+}
+
+.comment-content {
+    margin-top: 10px;
+}
+
+.comment-content strong {
+    font-weight: bold;
+}
+
+.comment-actions {
+    margin-top: 10px;
+}
+
+.edit-comment-link, .delete-comment-link {
+    text-decoration: none;
+    color: #555;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Form chỉnh sửa bình luận */
+.edit-comment-form {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: none;
+}
+
+.edit-comment-form h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.submit-comment {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Form thêm bình luận mới */
+.add-comment-form {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.add-comment-form h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* ----------------------------------------- edit video ----------------------------------- */
+/* Định dạng danh sách ul */
+ul.image-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Khoảng cách giữa các mục */
+}
+
+/* Định dạng mục video li */
+li.image-item {
+    width: 320px; /* Độ rộng của mỗi mục video */
+    margin-bottom: 20px; /* Khoảng cách dưới của mỗi mục */
+}
+
+/* Định dạng tiêu đề video */
+p.image-description {
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Định dạng video */
+
+/* Tùy chỉnh nút điều khiển video */
+video::-webkit-media-controls {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.7); /* Màu nền cho nút điều khiển */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Tùy chỉnh nút điều khiển video (điều chỉnh cho các trình duyệt khác) */
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-volume-slider {
+    background-color: transparent;
+}
+
+/* Tùy chỉnh màu sắc cho nút điều khiển video */
+video::-webkit-media-controls-play-button {
+    color: #fff;
+}
+
+/* Tùy chỉnh nút điều khiển video khi được hover */
+video::-webkit-media-controls-play-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Ẩn thanh cuộn ngang trên video */
+video::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ẩn thanh cuộn ngang trên video (điều chỉnh cho các trình duyệt khác) */
+video::-webkit-scrollbar-track {
+    display: none;
+}
+
+/* Ẩn thanh cuộn ngang trên video (điều chỉnh cho các trình duyệt khác) */
+video::-webkit-scrollbar-thumb {
+    display: none;
+}
+#map {
+    width: 350px;
+    height: 400px;
+    margin-left: 20px;
+    padding: 0;
+    margin-top: 30px;
+ }
+.uppercase-text {
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+ /* =========================BÀI VIẾT LIÊN QUAN======================== */
+ .article {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px;
+    border: 1px solid #E6E6E6;
+    margin-bottom: 20px;
+    
+}
+.article:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: scale(1.0); /* Ví dụ: tăng kích thước hình ảnh khi hover */
+}
+
+.article img {
+    transition: transform 0.3s ease; /* Thêm transition cho hình ảnh */
+}
+
+.article:hover img {
+    transform: scale(1.1); /* Ví dụ: tăng kích thước hình ảnh khi hover */
+}
+
+.article img {
+    width: 170px;
+    height: 100px;
+    margin-right: 20px; /* Khoảng cách giữa ảnh và nội dung */
+}
+
+.article-content {
+    display: -webkit-box;            /* Hiển thị phần tử dưới dạng box */
+    -webkit-line-clamp: 10;          /* Giới hạn số dòng là 3 */
+    -webkit-box-orient: vertical;   /* Hiển thị dọc theo chiều dọc */
+    overflow: hidden;               /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis;                /* Giới hạn chiều rộng tối đa của phần tử */
+}
+
+
+/* Tùy chỉnh kiểu dáng cho class article-title */
+.article-title {
+    text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+    color: #333; /* Màu văn bản */
+    font-weight: bold; /* Đậm */
+    margin-right: 10px; /* Khoảng cách giữa tiêu đề và nội dung */
+}
+
+.columns {
+    display: flex;
+    width: 100%;
+}
+
+.column1 {
+    flex: 7; /* Cột 1 chiếm 70% */
+    text-align: justify;
+}
+
+.column2 {
+    flex: 3; /* Cột 2 chiếm 30% */
+    right: 0;
+}
+.column2 #map a{
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+.inforUserArtice{
+    margin: 10px;
+    padding: 20px;
+    background-color: #f6f3ee;
+    display: flex;
+    width: 95%;
+    height: 250px;
+    border-radius: 3px;
+}
+.inforUserArtice .column1{
+    flex: 3;
+}
+.inforUserArtice .column2{
+    flex: 7;
+}
+.inforUserArtice .column1 img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.inforUserArtice .column2 p{
+    font-family: "Times New Roman";
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: 1.5;
+    color: #555;
+    
+}
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.bright-video {
+    filter: brightness(4);
+    margin: 10px; /* Khoảng cách giữa các video */
+}
+
+.table-of-contents {
+    display: none;
+    
+}
+.table-of-contents li a{
+    text-decoration: none;
+}
+.table-of-contents a:hover{
+    color: red;
+    text-decoration: underline;
+}
+.mucluc{
+    float: none;
+    width: 60%;
+    padding: 1em 1em;
+    margin: 15px 0;
+    background-color: #e9f9ff;
+    border-radius: 4px;
+    padding: 16px 16px 6px 16px;
+    position: relative;
+}
+
+.text_show_hide {
+    cursor: pointer;
+    color: rgb(255, 30, 0);
+    text-decoration: underline;
+}
+#toggle-button{
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+}
+.highlighted-comment {
+    /* Thêm các kiểu CSS mà bạn muốn áp dụng cho phần tử comment khi được làm nổi bật */
+    background-color: rgba(230, 230, 218, 0.482);
+    border: 1px solid #141212;
+   
+}
+
+
+.social-icons {
+    display: flex;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.social-icons a {
+    margin-right: 10px;
+    text-decoration: none; /* Loại bỏ gạch chân mặc định của liên kết */
+    color: #333; /* Màu chữ cho liên kết, thay đổi theo ý muốn */
+}
+
+.social-icons i {
+    font-size: 24px; /* Kích thước icon */
+    
+    padding: 7px;
+    border-radius: 50%;
+}
+.social-icons i:hover {
+    border: 1px solid red;
+    background-color: aquamarine;
+} 
+.social-icons img:hover{
+    border: 1px solid red;
+    background-color: aquamarine;
+
+}     
+.social-icons img{
+    padding: 7px;
+}   
+/* ============= */
+.social-share-buttons {
+    display: flex;
+}
+
+.social-share-buttons > div {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+}
+
+.social-share-buttons a {
+    text-decoration: none;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.facebook-share-button i,
+.twitter-share-button i {
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.zalo-share-button img {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.social-share-button {
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}

@@ -1,0 +1,429 @@
+/* Thiết lập các thuộc tính chung cho body */
+body {
+   background-color: #fff;
+   margin: 0;
+   padding: 0;
+   font-family: "Times New Roman", sans-serif;
+   padding-left: 50px;
+   padding-right: 50px;
+   
+}
+
+header{
+   padding-top: 20px
+}
+
+/* Định dạng logo */
+.logo {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 10px;
+   margin-left: 300px;
+   font-size: 40px;
+
+}
+
+.logo img {
+   max-width: 17%;
+   vertical-align: middle;
+   border-radius: 50%;
+   box-shadow: rgba(3, 95, 46, 0.35) 0px 5px 5px;
+}
+
+.fuirt {
+   margin-top: 20px;
+   color: rgba(44, 94, 0, 0.61);
+   padding-top: 3px;
+   padding-left: 6px;
+   font-family: 'Roboto', sans-serif;
+   font-size: 30px;
+}
+
+.logo a {
+
+   display: flex;
+   align-items: flex-start;
+   text-decoration: none;
+   font-weight: bolder;
+}
+
+#current-date {
+
+   font-size: 15px;
+   position: absolute;
+   top: 32px;
+   color: black;
+   margin-top: 50px;
+   margin-left: 20px;
+   left: 48%; /* Đặt vị trí ở giữa theo chiều ngang */
+   transform: translateX(-50%); /* Đặt vị trí chính xác ở giữa */
+   background-color: rgba(255, 255, 255, 0.8); /* Màu nền (tùy chọn) */
+   border-radius: 5px; /* Góc bo tròn (tùy chọn) */
+}
+
+
+
+/* Định dạng header */
+
+.DropdownMenu {
+   width: 100%;
+   border-top: 1px solid #C3D0E0;
+   text-align: center;
+   margin-bottom: 5px;
+   padding: 0;
+   height: 48px;
+   position: relative; /* Để sử dụng box-shadow */
+}
+
+/* Sử dụng box-shadow để tạo đường viền phía trên */
+.DropdownMenu::before {
+   content: "";
+   display: block;
+   position: absolute;
+   top: 54px; /* Di chuyển lên trên 1px để trùng lên border-top */
+   left: 0;
+   width: 100%;
+   height: 1px; /* Độ rộng của đường viền phía trên */
+   background-color: #363d4634; /* Màu của đường viền phía trên */
+   z-index: 1; /* Đảm bảo nó nằm trên border-top */
+}
+
+/* Định dạng thanh điều hướng chính */
+.nav {
+   list-style-type: none;
+  
+   margin-top: 6px;
+   margin-left: 6px;
+   margin-right: 6px;
+   padding: 0;
+   display: flex;
+   justify-content: space-between; /* Căn đều các thành phần trong thanh điều hướng */
+}
+
+.nav li {
+   float: left;
+   padding: 0 1px;
+   position: relative;
+   list-style: outside none none;
+   transition: ease 0.5s;
+   height: 48px;
+
+}
+
+.nav a, select {
+   text-decoration: none;
+   line-height: 45px;
+   font-family: Merriweather;
+   font-size: 12px;
+   text-transform: uppercase;
+   color: #182940;
+}
+
+/* Mặc định cho thanh đỏ */
+.nav li.active {
+   border-bottom: 2px solid red; /* Màu và độ rộng của thanh đỏ */
+}
+
+/* Hover state cho thanh đỏ */
+.nav li:hover {
+   border-bottom: 3px solid rgb(255, 0, 0); /* Màu và độ rộng của thanh đỏ */
+   padding-top: 0; /* Điều chỉnh khoảng cách dưới thanh đỏ */
+   cursor: pointer;
+}
+
+/* Định dạng ô tìm kiếm và ô chọn vùng */
+.search input,
+.select {
+   padding: 5px;
+   border: none;
+   border-radius: 5px;
+   outline: none;
+}
+
+.search input[type="text"] {
+   border: 1px solid #ccc;
+   background-color: #fff;
+}
+
+.select {
+   padding: 5px;
+   background-color: #fff;
+   border: none;
+   border-radius: 5px;
+   font-size: 14px;
+}
+
+/* Định dạng phần tài khoản */
+.account {
+   font-weight: bold;
+   text-transform: uppercase;
+   display: flex;
+   align-items: center;
+}
+
+.account i {
+   font-size: 24px;
+   margin-right: 7px;
+}
+
+
+
+/* Định dạng ô chọn vùng */
+select#id_vung_trong {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   outline: none;
+  
+}
+
+
+/* Định dạng ô tìm kiếm */
+.search-bar input[type="text"] {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   outline: none;
+   /* width: 60%; */
+}
+
+.search-bar button[type="submit"] {
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+:hover.search-bar button[type="submit"] {
+   background-color: #4f69606e;
+   color: #f3f3f3;
+}
+
+
+/* Định dạng footer */
+footer {
+   background: url(../images/backrougfooter.jpg) no-repeat center;
+   background-size: cover;
+   color: #ffff;
+   padding-top: 50px;
+   padding-bottom: 10px;
+   margin-top: 100px;
+   
+}
+
+.footer1 {
+   margin-left: 10%;
+   width: 500px;
+}
+
+.ghi {
+   font-family: 'Roboto', sans-serif; /* Sử dụng kiểu chữ Roboto hoặc kiểu chữ khác nếu bạn muốn */
+   font-size: 16px; /* Kích thước chữ */
+   margin-top: 10px; /* Khoảng cách phía trên */
+   text-align: center;
+}
+
+.ghi p {
+   line-height: 1.4; /* Độ cao dòng */
+   opacity: 0.7;
+}
+
+
+.search-button i {
+   margin-right: 5px; /* Để tạo khoảng cách giữa biểu tượng và văn bản */
+}
+#scrollToTopButton {
+   
+   display: none;
+   position: fixed;
+   bottom: 25px;
+   right: 7px;
+   z-index: 99;
+   background-color: #4db03491;
+   color: #e90808;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   padding: 5px 6px;
+   font-size: 22px;
+   transition: 0.10s ease; /* Hiệu ứng chuyển động trong 0.3 giây */
+}
+
+#scrollToTopButton:hover {
+   background-color: #0056b3;
+}
+
+.notification {
+   position: relative;
+   display: inline-block;
+}
+
+.notification i {
+   font-size: 24px;
+}
+
+.notification span {
+   position: absolute;
+   top: -10px;
+   right: -10px;
+   background-color: red;
+   color: white;
+   border-radius: 50%;
+   padding: 5px 10px;
+}
+
+
+#notification-container {
+   position: fixed;
+   top: 0;
+   right: 50px;
+   background-color: #fff;
+   border: 1px solid #ddd;
+   padding: 10px;
+   max-height: 300px;
+   overflow-y: auto;
+   display: none;
+   z-index: 999;
+   margin-top: 12%;
+   width: 30%;
+}
+#notification-container a{
+   text-decoration: none;
+}
+/* CSS cho nút đóng */
+#close-notification-container {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+   /* Màu cho thông báo đã đọc */
+.read {
+   color: #0030ef; /* Màu xám hoặc màu khác bạn chọn */
+}
+
+/* Màu cho thông báo chưa đọc */
+.unread {
+   color: red; /* Màu đỏ hoặc màu khác bạn chọn */
+}
+
+
+
+/* Định dạng phần tài khoản */
+.account {
+   font-weight: bold;
+   text-transform: uppercase;
+   display: flex;
+   align-items: center;
+}
+
+.account i {
+   font-size: 24px;
+   margin-right: 7px;
+}
+.canhan {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   width: 50px;
+}
+
+/* Styling for the dropdown content */
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #ffffff;
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+   z-index: 1;
+   border-radius: 4px;
+   right: 10px;
+}
+.dropdown-content img{
+   border-radius: 50%;
+   width: 40px;
+   height: 40px;
+   padding: 5px;
+}
+
+.canhan:hover .dropdown-content {
+   display: block;
+}
+
+/* Styling for the dropdown links */
+.dropdown-content a {
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+   width: 200px;
+}
+
+.dropdown-content a:hover {
+   background-color: #f1f1f1;
+}
+
+.canhan a {
+   font-weight: bold;
+}
+
+.taikhoan {
+   color: #007bff;
+}
+
+.dangxuat {
+   color: #d9534f;
+}
+/*======FOODTER=============================== */
+
+.footer-content {
+   display: flex;
+   flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+}
+
+.footer {
+   display: flex;
+   justify-content: space-between;
+   font-size: 12px;
+}
+
+.footer1, .footer2 {
+   width: 48%; /* Điều chỉnh độ rộng tùy thuộc vào nhu cầu */
+}
+
+.footer2 {
+   margin-left: 5%;
+   margin-right: 10%;
+}
+
+.footer21 {
+   margin-top: 5%;
+   text-align: center;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-gap: 10px; /* Thêm khoảng cách giữa các cột nếu cần */
+   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(255, 255, 255, 0.15) 0px 0px 0px 1px;
+}
+
+.footer22 {
+   /*margin-top: 20px;*/
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-gap: 10px;
+   opacity: 0.8;
+}
+
+.icon-text {
+   text-align: center; /* Center the text */
+}
+
+/* Style the icon */
+.icon-text i {
+
+   display: block; /* Display the icon as a block element (above the text) */
+   margin: 15px auto; /* Center the icon horizontally */
+}
+#notification{
+            
+   margin-top: 5px;
+   padding: 3px;
+}

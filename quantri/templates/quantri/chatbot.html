@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+     #chat-container {
+       display: none;
+       width: 50%;
+       position: fixed;
+       bottom: 70px;
+       right: 0;
+       border: 1px solid #ccc;
+       background-color: #fff;
+       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+       border-radius: 5px;
+       font-size: 14px;
+       z-index: 999;
+       margin-right: 5px;
+       padding-right: 5px;
+     }
+     
+     .card-flex-grow-1 ul {
+       height: 150px;
+       padding: 10px;
+       overflow-y: auto;
+     }
+     
+     .message-text {
+       padding: 10px;
+     }
+     
+     ul.messages-list {
+       list-style: none;
+       padding: 0;
+       margin: 0;
+       overflow-y: auto;
+       height: 300px;
+     }
+     
+     .card-header.bg-primary {
+       background-color: #041c0570;
+       color: #fff;
+       height: 25px;
+     }
+     
+     .message-form .btn-primary {
+       padding: 5px;
+       border-color: #007bff;
+       font-size: 14px;
+       border-radius: 3px;
+     }
+     
+     .message-form .btn-primary:hover {
+       background-color: #0056b3;
+       border-color: #0056b3;
+     }
+     
+     .message-input {
+       width: 100%;
+       padding: 5px;
+       height: 20px;
+     }
+     /* CSS */
+     .message-form .input-group {
+       display: flex;
+       align-items: center;
+     }
+     
+     .message-form .btn-primary {
+       margin-left: 2px;
+       margin-right: 2px;
+       font-size: 10px;
+       width: 30px;
+     }
+     
+     #open{
+       display: none;
+       width: 2%;
+       position: fixed;
+       bottom: 70px;
+       right: 0;
+       border: 1px solid #ccc;
+       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+       border-radius: 5px;
+       font-size: 16px;
+       z-index: 999;
+       text-align: center;
+       padding: 3px;
+       margin-right: 7px;
+       
+     }
+     #open:hover {
+      border: 1px solid red;
+     }
+     #close{
+       right: 0;
+     }
+     #close:hover{
+       color: #ec0707;
+     }
+     .message-text{
+       border: 1px solid rgb(91, 78, 78);
+      
+       border-radius: 10px;
+       margin: 5px;
+       /* box-shadow: 5px 5px 5px 5px rgba(6, 172, 97, 0.244); */
+
+     }
+     /* #received{
+       background-color: aqua;
+     }
+     #text{
+       background-color: rgb(141, 14, 105);
+     } */
+     </style>
+</head>
+
+<body>
+  {% load static %}
+  <!-- <i id="open" class="fa-brands fa-facebook-messenger"></i> -->
+
+  <img id="open" src="{% static 'images/openai.jpg' %}" alt="">
+  <div id="chat-container">
+    <div class="card-flex-grow-1" style="font-size: 15px;">
+      <div class="card-header" style="position: relative; margin: auto; padding: 5px; border-radius: 5px; font-weight: bold;">
+        Xin chào ! Chúng tôi có thể giúp gi cho bạn???
+        <i id="close" class="fa-solid fa-circle-xmark" style="position: absolute; right: 5px; margin: 5px;"></i>
+      </div>
+      
+      <ul class="list-unstyled messages-list">
+        {% for chat in chats %}
+            <li class="message sent">
+          <div id="text" class="message-text">
+           
+            <div class="message-sender">
+              <b style="color: #ec0707;">You</b> 
+              <!-- {{chat.created_at|date:"H:i d/m/Y"}} -->
+            </div>
+            <div class="message-content">
+              {{chat.message}}
+            </div>
+          </div>
+        </li>
+
+        <li id="received" class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b style="color: #007bff;">AI Chatbot</b>
+            </div>
+            <div class="message-content">
+              {{chat.response}}
+            </div>
+          </div>
+        </li>
+
+        
+        {% endfor %}
+        
+
+      </ul>
+    </div>
+    <br><br>
+    
+    <form method="" class="message-form form-inline">
+      {% csrf_token %}
+      <div class="input-group" >
+        <input type="text" class="form-control message-input" placeholder="Nhập nội dung ...">
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px;"><i class="fa-solid fa-paper-plane" style="color: #ec0707;"></i></i></button>
+      </div>
+      
+    </form>
+  </div>  
+  
+</body>
+<script>
+        // Lấy phần tử HTML hiển thị danh sách tin nhắn
+        const messagesList = document.querySelector('.messages-list');
+
+        // Lấy phần tử HTML của form tin nhắn và ô input tin nhắn
+        const messageForm = document.querySelector('.message-form');
+        const messageInput = document.querySelector('.message-input');
+
+        // Xử lý sự kiện khi người dùng gửi tin nhắn
+        messageForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          // Lấy nội dung tin nhắn từ ô input và loại bỏ khoảng trắng ở hai đầu
+          const message = messageInput.value.trim();
+
+          // Kiểm tra nếu tin nhắn không có nội dung, không thực hiện gì cả
+          if (message.length === 0) {
+            return;
+          }
+
+          // Tạo một phần tử li mới để chứa tin nhắn đã gửi
+          const messageItem = document.createElement('li');
+          messageItem.classList.add('message', 'sent');
+          messageItem.innerHTML = `
+              <div class="message-text">
+                  <div class="message-sender">
+                      <b>You</b>
+                  </div>
+                  <div class="message-content">
+                      ${message}
+                  </div>
+              </div>`;
+
+          // Thêm phần tử li vào danh sách tin nhắn
+          messagesList.appendChild(messageItem);
+
+          // Xóa nội dung trong ô input tin nhắn
+          messageInput.value = '';
+
+          // Gửi tin nhắn đến server sử dụng fetch API
+          fetch('', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'message': message
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              // Xử lý dữ liệu JSON ở đây
+
+              // Lấy phản hồi từ server
+              const response = data.response;
+
+              // Tạo một phần tử li mới để chứa tin nhắn nhận được từ AI Chatbot
+              const messageItem = document.createElement('li');
+              messageItem.classList.add('message', 'received');
+              messageItem.innerHTML = `
+              <div class="message-text">
+                  <div class="message-sender">
+                    <b>AI Chatbot</b>
+                  </div>
+                  <div class="message-content">
+                      ${response}
+                  </div>
+              </div>`;
+
+              // Thêm phần tử li vào danh sách tin nhắn
+              messagesList.appendChild(messageItem);
+            });
+        });
+
+        // Xử lý sự kiện cuộn trang web, hiển thị hoặc ẩn nút mở chat
+        window.addEventListener("scroll", function() {
+          if (window.scrollY >= 300) {
+            document.getElementById("open").style.display = "block";
+          } else {
+            document.getElementById("open").style.display = "none";
+          }
+        });
+
+        // Lấy các phần tử HTML của nút mở và nút đóng chat
+        const openButton = document.getElementById('open');
+        const closeButton = document.getElementById('close');
+        const chatContainer = document.getElementById('chat-container');
+
+        // Xử lý sự kiện khi người dùng nhấn nút mở chat
+        openButton.addEventListener('click', function() {
+          chatContainer.style.display = 'block'; // Hiển thị chat-container khi click vào nút "mở"
+        });
+
+        // Xử lý sự kiện khi người dùng nhấn nút đóng chat
+        closeButton.addEventListener('click', function() {
+          chatContainer.style.display = 'none'; // Ẩn chat-container khi click vào nút "đóng"
+        });
+
+</script>
+</html>
+

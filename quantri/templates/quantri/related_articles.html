@@ -1,0 +1,105 @@
+
+{% extends 'quantri/base.html' %}
+        
+    {% block conten%}
+ 
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            
+            {% load static %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <link rel="stylesheet" href="{% static 'quantri/indexx.css' %}">
+            <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js'></script>
+            <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet' />
+              -->
+              <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.min.js"></script>
+            <link
+                href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.css"
+                rel="stylesheet"
+                type="text/css"
+        />
+        <!-- Promise polyfill script is required -->
+        <!-- to use Goong Geocoder in IE 11. -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+        </head>
+        <div id="" class="LinkSlide" >
+            <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" scrolldelay="5" direction="left">
+                <ul class="horizontal-list"> 
+                    {% for notification in notifications %}
+                        <li><a style="text-transform: uppercase;" href="{% url 'post:notification' notification.NotificationID %}">{{ notification.Title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </marquee>
+        </div>
+        <style>
+            .column2 section{
+                max-height: 700px;
+                overflow-y: auto;
+            }
+            .column2 section::-webkit-scrollbar {
+                width: 1px;
+            }
+        </style>
+        <body>
+            
+            <div class="container">
+                <div class="column2">
+                    <section>
+                        
+                        <h4>Kết quả lọc vùng: <span style="color: rgb(238, 19, 19);">{{name}}</span></h4>
+                        {% for pages in related_articles %}
+
+                            <li class="article"> 
+                                <div class="c1">
+                                    <img src="{{ pages.Image.url }}" alt="" >
+                                </div>
+                                <div class="c2">
+                                    <a href="{% url 'post:article_detail' pages.ArticleID %}" class="article-title">{{ pages.Title }}</a>
+                                    <p class="article-content">{{ pages.Content }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        {% if related_articles|length == 0 %}
+                            <p>Không có dữ liệu bài viết nào.</p>
+                        {% endif %}
+
+                    </section>
+                   
+                </div>
+                <div class="column1">
+                    <section>
+                        <h3>BẢN ĐỒ NÔNG SẢN</h3>
+                        <div id='map'></div>
+                        <div id="locations" data-locations="{{ locations_json }}"></div>
+                        <script src="{% static 'js/indexx.js' %}"></script>
+                    </section>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div style="background-color: red; width: 10px; height: 10px;"></div>
+                            <span>Dài ngày</span>
+                        </div>
+                        <div class="legend-item">
+                            <div style="background-color: #FFFF00; width: 10px; height: 10px;"></div>
+                            <span>Trung ngày</span>
+                        </div>
+                        <div class="legend-item">
+                            <div style="background-color: #00FF00; width: 10px; height: 10px;"></div>
+                            <span>Ngắn ngày</span>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </body>
+        </html>
+        
+                
+    {% endblock%}
+   

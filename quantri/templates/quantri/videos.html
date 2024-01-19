@@ -1,0 +1,86 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Newspaper List</title>
+        <link rel="stylesheet" href="{% static 'quantri/items_list.css' %}">
+    </head>
+    <body>
+    <div class="container">
+        <div class="main_item">
+            <ul>
+                <li class="Title"><strong></strong> {{ video.Title }}</li>
+                <li class="Title1" style="opacity: 0.6; margin-bottom: 30px;"><strong></strong> {{ video.Title_phu }}</li>
+                <video controls width="640" height="480" class="bright-video" autoplay>
+                    <source src="{{ video.VideoFile.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+            </ul>
+        </div>
+        <div class="social-share-buttons">
+
+            <div class="facebook-share-button">
+                <i class="fab fa-facebook" style="color: #1877f2"></i>
+                <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button"
+                     data-size="small">
+                    <a target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&amp;src=sdkpreparse"
+                       class="fb-xfbml-parse-ignore">Share on Facebook</a>
+                </div>
+            </div>
+
+            <div class="twitter-share-button">
+                <img src="{% static 'images/zalo1.png' %}" alt="Logo"
+                     style="width: 25px; height: 25px; margin-right: 10px">
+                {#                <a target="_blank" href="https://zalo.me/{{user_avt.zalo}}">Share on Zalo</a>#}
+                <a target="_blank"
+                   href="https://zalo.me/share?url={{ request.build_absolute_uri }}/{{ user_avt.zalo }}">Share on
+                    Zalo</a>
+            </div>
+
+            <div class="twitter-share-button">
+                <i class="fab fa-twitter"></i>
+                <a target="_blank" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}">Tweet on
+                    Twitter</a>
+            </div>
+        </div>
+
+
+        <div class="h_r">
+            <p class="additional-text">Tin Khác</p>
+            <hr class="divider">
+        </div>
+        <div class="main_item_2">
+            {% for video in videos %}
+                <a href="{% url 'post:video' video.Video_id %}" class="newspaper-item_column_2" style="height: 200px">
+                    <div class="main_item_2_1">
+                        <video controls width=100% height="100%" class="bright-video">
+                            <source src="{{ video.VideoFile.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="main_item_2_2">
+                        <h2>{{ video.Title }}</h2>
+                        <p class="description">
+                            {% with words=video.Title_phu|wordcount %}
+                                {% if words > 10 %}
+                                    {{ video.Title_phu|slice:":100" }}...
+                                {% else %}
+                                    {{ video.Title_phu }}
+                                {% endif %}
+                            {% endwith %}
+                        </p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

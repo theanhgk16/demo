@@ -1,0 +1,115 @@
+h2{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 30px;
+    
+}
+.container form{
+    width: 60%;
+    margin: auto;
+    background-color: rgba(19, 34, 61, 0.33);
+    border-radius: 10px;
+    padding: 10px;
+}
+.content{
+    left: 20px;
+    
+}
+.content p{
+    padding-left: 14%;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(247, 0, 0);
+}
+label {
+    padding: 5px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 100px;
+    resize: vertical; /* Cho phép thay đổi chiều cao theo chiều dọc */
+}
+.container
+    input[type="text"],
+    textarea,
+    input[type="date"],
+    input[type="number"],
+    input[type="file"],
+    input[type="submit"],label {
+        width: 70%;
+        border-radius: 5px;
+        font-size: 16px;
+        display: block;
+        margin: auto;
+    }
+.container
+    input[type="text"],
+    textarea,
+    input[type="date"],
+    input[type="number"],
+    input[type="file"],
+    input[type="submit"] {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        display: block;
+        margin: auto;
+    }
+input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+#fruitForms button{
+    display: block;
+    float: right;
+    margin-right: 110px;
+    margin-top: 7px;
+    border-radius: 5px;
+    /* background-color: rgba(25, 78, 135, 0.5); */
+    border: none;
+    
+    color: #f50808;
+    font-size: 17px;
+}
+#fruitForms button:hover{
+    background-color: red;
+    color: black;
+}
+
+.messages{
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    background-color: rgb(44, 26, 26);
+    width: 300px;
+    padding: 3px;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+#addButton{
+    background-color: rgb(127, 127, 137);
+    border-radius: 6px;
+    margin: auto;
+    margin-top: 5px;
+    padding: 3px;
+    width: 150px;
+    color: aliceblue;
+}

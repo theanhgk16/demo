@@ -1,0 +1,117 @@
+/* Reset các giả mục đích */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+    /* color: black; */
+}
+
+/* Thiết lập font và margin cho toàn bộ trang */
+body {
+    margin: 0; /* Loại bỏ margin mặc định */
+    padding: 0; /* Loại bỏ padding mặc định */
+    font-family: "Times New Roman", sans-serif; /* Chọn font chung cho trang web */
+    padding-left: 50px;
+    padding-right: 50px;
+
+}
+
+/* Thiết lập cấu trúc chính của trang */
+.main_newspaper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+
+.newspaper-item {
+    width: calc(33% - 1%); /* 30% chiều rộng với 20px khoảng trống giữa các cột */
+    text-decoration: none;
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài phần tử */
+
+    /*border: 0.5px solid #ddd;*/
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+
+.newspaper-item_1 img {
+    width: 100%;
+    height: 250px;
+    /*margin-bottom: 20px;*/
+}
+
+.newspaper-item_2 {
+    padding: 7px;
+}
+
+/* Tùy chỉnh kiểu chữ */
+h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 1em;
+    color: #666;
+    opacity: 0.6;
+    font-weight: normal;
+}
+
+/*========================================*/
+
+
+/* Style for the main container */
+.main_newspaper_column_2 {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Style for each newspaper item */
+.newspaper-item_column_2 {
+    text-decoration: none;
+    color: #333;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+    height: 150px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.newspaper-item_column_2:hover {
+    transform: scale(1.02); /* Enlarge the item slightly on hover */
+}
+
+/* Style for the image container */
+.newspaper-item_1_2 img {
+    width: 145px;
+    height: 145px;
+    object-fit: cover; /* Maintain aspect ratio for the image */
+    border-radius: 50%; /* Create a circular image */
+    margin-right: 15px;
+}
+
+/* Style for the title and subtitle container */
+.newspaper-item_2_2 {
+    flex: 1;
+}
+
+/* Style for the title */
+.newspaper-item_2_2 h2 {
+    /*margin: 0;*/
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 0;
+}
+
+/* Style for the subtitle */
+.newspaper-item_2_2 h3 {
+    margin: 5px 0;
+    font-size: 1.2em;
+    color: #666;
+}

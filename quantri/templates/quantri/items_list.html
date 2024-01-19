@@ -1,0 +1,67 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newspaper List</title>
+    <link rel="stylesheet" href="{% static 'quantri/newspaper_list_1.css' %}">
+</head>
+<body>
+    <div class="main_newspaper">
+        {% for item in items %}
+            {% if forloop.counter <= 3 %}
+                <a href="{% url 'post:item' item.Items_id %}" class="newspaper-item">
+                    <div class="newspaper-item_1">
+                        {% if item.Image1 %}
+                            <img src="{{ item.Image1.url }}" alt="Image 1">
+                        {% endif %}
+                    </div>
+                    <div class="newspaper-item_2">
+                        <h2 style="color: black;">{{ item.Title }}</h2>
+{#                        <h3>{{ item.Title1|slice:":200" }}</h3>#}
+                        {% with words=item.Title1|wordcount %}
+                            {% if words > 10 %}
+                                <h3>{{ item.Title1|slice:":200" }}...</h3>
+                            {% else %}
+                                <h3>{{ item.Title1 }}</h3>
+                            {% endif %}
+                        {% endwith %}
+
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <hr style="width: 100%">
+    <div class="main_newspaper_column_2">
+        {% for item in items %}
+        {% if forloop.counter > 3 %}  {# Check if item is beyond the first three #}
+            <a href="{% url 'post:item' item.Items_id %}" class="newspaper-item_column_2">
+                <div class="newspaper-item_1_2">
+                    {% if item.Image1 %}
+                        <img src="{{ item.Image1.url }}" alt="Image 1">
+                    {% endif %}
+                </div>
+                <div class="newspaper-item_2_2">
+                    <h2>{{ item.Title }}</h2>
+{#                    <h3>{{ item.Title1 }}</h3>#}
+                    {% with words=item.Title1|wordcount %}
+                            {% if words > 10 %}
+                                <h3>{{ item.Title1|slice:":100" }}...</h3>
+                            {% else %}
+                                <h3>{{ item.Title1 }}</h3>
+                            {% endif %}
+                        {% endwith %}
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+</body>
+</html>
+{% endblock %}

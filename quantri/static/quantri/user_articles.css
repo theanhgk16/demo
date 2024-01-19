@@ -1,0 +1,136 @@
+  /* Thêm CSS tại đây */
+  .article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.article-info {
+    flex: 1;
+}
+button:hover{
+    border-radius: 5px;
+    color: rgb(255, 0, 0);
+    background-color: rgba(104, 86, 47, 0.649);
+    border: none;
+}
+.article button{
+    margin-right: 5px;
+    width: 70px;
+    height: 25px;
+    background-color: #9bb4a0;
+    border: none;
+        border-radius: 2px;
+}
+.article-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.article-status {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+h1{
+    text-align: center;
+}
+.stt{
+    
+    padding: 20px;
+    font-weight: bolder;
+    color: #d20909;
+    border-right: 2px solid  red;
+    margin: 10px;
+}
+/* Định dạng tablinks khi không active */
+.tablinks {
+    background-color: #f2f2f2;
+}
+
+/* Định dạng tablinks khi active (đậm) */
+.tablinks.active {
+    background-color: #ea0c0c; /* Màu nền */
+    color: #fff; /* Màu chữ */
+    font-weight: bold; /* Đậm */
+    border-radius: 5px; /* Bo góc */
+}
+
+footer{
+    display: none;
+}
+#account{
+    display: none;
+    width: 60%;
+    margin: auto;
+    padding-bottom: 30px;
+}
+.tab{
+    margin-top: 20px;
+}
+/* Định dạng các nút sửa và xóa */
+.button {
+    background-color: #428bca;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  
+}
+
+.button:hover {
+    background-color: #357ebd;
+}
+
+/* Định dạng tiêu đề */
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Định dạng phần input */
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+}
+
+/* Định dạng phần nút submit */
+input[type="submit"] {
+    background-color: #ea0c0c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #d20909;
+}
+.heaconten a{
+    text-decoration: none;
+    font-family: "Times New Roman", sans-serif;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 254, 254);
+    border-radius: 5px;
+    padding: 3px;
+    /* border: 1px solid rgb(0, 0, 0); */
+    margin-left: 10px;
+}
+.heaconten a:hover{
+    background-color: rgba(61, 106, 75, 0.426);
+    color: brown;
+}
+a {
+    text-decoration: none;
+    color: #252525;
+}

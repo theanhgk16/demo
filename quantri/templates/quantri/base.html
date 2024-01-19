@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NongSanVietNam</title>
+    <link rel="stylesheet" href="{% static 'quantri/basee.css' %}">
+    <!-- Thêm CSS và JS của Font Awesome vào trang của bạn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Thêm biểu tượng quả cầu (favicon) -->
+    <link rel="icon" href="{% static 'images/logoweb.png' %}" type="image/x-icon">
+<script>
+        function updateCurrentDate() {
+            const currentDateElement = document.getElementById('current-date');
+            if (currentDateElement) {
+                const daysOfWeek = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+                const now = new Date();
+                const formattedDate = `${daysOfWeek[now.getDay()]} , ${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+                currentDateElement.textContent = ` ${formattedDate}`;
+            }
+        }
+        
+        // Gọi hàm cập nhật ngày mỗi giây
+        setInterval(updateCurrentDate, 1000);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".nav li");
+
+            // Xác định thanh đỏ khi trang được tải lại
+            menuItems.forEach(function (menuItem) {
+                const anchor = menuItem.querySelector("a");
+                if (anchor && anchor.href === window.location.href) {
+                    menuItem.classList.add("active");
+                }
+            });
+
+        // Xử lý sự kiện khi click vào menu item
+        menuItems.forEach(function (menuItem) {
+            menuItem.addEventListener("click", function () {
+                // Xóa lớp active từ tất cả các menu item
+                menuItems.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+
+                // Thêm lớp active cho menu item được click
+                menuItem.classList.add("active");
+            });
+        });
+    });
+
+
+</script>
+        
+</head>
+<body>
+     <!-- hiển thị thông báo bình luận-->
+     <div id="notification-container" class="hidden">
+        <ul>
+            {% for notification in display_notification %}
+            <li id="notification" class="{% if notification.is_read %}read{% else %}unread{% endif %}">
+                <a href="{% url 'post:article_notifications' notification.Article.ArticleID notification.FeedbackID %}">
+                    <strong>{{ notification.ResponseDate|date:"H:i d/m/Y" }}:</strong> {{ notification.notification_message }}
+                </a>
+            </li>
+            {% empty %}
+                <p>Không có thông báo nào!!!</p>
+            {% endfor %}
+            
+        </ul>
+        <button id="close-notification-container">Đóng</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const notificationContainer = document.querySelector('#notification-container');
+        const closeNotificationBtn = document.querySelector('#close-notification-container');
+        const notificationIcon = document.querySelector('#notification-icon');
+
+        // Bắt sự kiện khi người dùng nhấn vào notification-icon
+        notificationIcon.addEventListener('click', function(event) {
+            event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+            
+            // Thực hiện các hành động khi notification-icon được nhấn
+            // Ví dụ: Hiển thị hoặc ẩn thông báo
+            notificationContainer.style.display = 'block'; // Hiển thị thông báo
+        });
+        closeNotificationBtn.addEventListener('click', () => {
+            notificationContainer.style.display = 'none';
+        });
+    });
+    </script>
+   <div class="container_base ">
+        <div class="logo">
+            <a href="{% url 'post:home' %}">
+                {% load static %}
+                <img src="{% static 'images/logoweb.png' %}" alt="Logo">
+                <span class="fuirt">Nông Sản Việt Nam</span>
+                <div class="current-date-container">
+                    <span id="current-date">Ngày tháng năm hiện tại</span>
+                </div>
+            </a>
+        </div>
+     
+    </div>
+    <header>
+        <div class="DropdownMenu">
+            <ul class="nav">
+                <li style="width: 50px;"><a href="{% url 'post:home' %}"><i class="fa fa-home fa-2x" aria-hidden="true" style="font-size: 20px;"></i></a></li>
+                <li>
+                    <select id="id_vung_trong">
+                        <option value="" hidden selected disabled>Chọn vùng</option>
+                        {% for growing_region in growing_regions %}
+                            <option value="{{ growing_region.GrowingRegionID }}">{{ growing_region.RegionName }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                
+                <li>
+                    <div class="search-bar">
+                        <form method="GET" action="{% url 'post:search' %}">
+                            <input type="text" name="q" placeholder="Tìm kiếm">
+                            <!-- <button type="submit" class="search-button">
+                                <i class="fas fa-search"></i>
+                            </button> -->
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'post:item_list' %}"><i class="fas fa-cube"></i> SẢN VẬT ĐỊA PHƯƠNG</a>
+                </li>
+                <li>
+                    <a href="{% url 'post:newspaper_list' %}"><i class="fas fa-book"></i> BÁO ĐIỆN TỬ</a>
+                </li>
+               
+                <li>
+                    <a href="{% url 'post:videos_list' %}"><i class="fa-solid fa-video"></i> VIDEO</a>
+                </li>
+                <li><a href="{% url 'post:weather' %}">THỜI TIẾT</a></li>
+                <li id="">
+                    <a id="notification-icon" >
+                        <i class="fa fa-bell"></i>
+                        <span id="notification-count">{{ count }}</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <div class="account">
+                        {% if user.is_authenticated %}
+                            <li>
+                              
+                                <div class="canhan" onclick="toggleDropdown()">
+                                    <a href="#"><i class="fas fa-user"></i></a>
+                                    <div class="dropdown-content">
+                                        <a href="{% url 'post:get_user_articles' user_id_param=user.id %}" class="taikhoan">
+                                            Tài khoản
+                                        </a>
+                                        <a href="{% url 'post:logout' %}" class="dangxuat">đăng xuất</a>
+                                    </div>                                    
+                                    <script>
+                                        function toggleDropdown() {
+                                            var dropdownContent = document.querySelector('.dropdown-content');
+                                            dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+                                        }
+                                    </script>
+                                </div>
+                            </li>
+                        {% else %}
+                            <a href="{% url 'post:register' %}"><i class="fas fa-user"></i></a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+    </header>
+    <button id="scrollToTopButton" onclick="scrollToTop()"><i class="fa-solid fa-circle-arrow-up"></i></i></button>
+    <main>
+               
+        {% block conten%}
+        {% endblock %}      
+                
+    </main>
+
+   
+ 
+    <footer>
+        <div class="footer-content">
+            <div class="footer">
+                <div class="footer1">
+                    <H2>&copy; 2024 Quản Lý Vùng Trồng Trái Cây</H2>
+                    <p>Trụ sở: Phú Đô - Nam Từ Liêm - Hà Nội.</p>
+                    <p>Điện thoại: Văn phòng: 080 99999; Fax: 080.99999</p>
+                    <p>Email: anhnt@gmail.com.vn</p>
+                    <p>Bản quyền thuộc Nguyễn Thế Anh</p>
+                </div>
+                <div class="footer2">
+                    <div class="footer21">
+                        <p class="icon-text" style="margin-left: 5px"><i class="fa-solid fa-film"></i>Giới thiệu Cổng TTĐT
+                            Chính phủ</p>
+                        <p class="icon-text"><i class="fa-solid fa-envelope"></i> Thư điện tử công vụ Chính phủ</p>
+                        <p class="icon-text"><i class="fa-solid fa-phone"></i>Liên hệ</p>
+                        <p class="icon-text"><i class="fa-solid fa-bars"></i>Sơ đồ Cổng TTĐT Chính phủ</p>
+                    </div>
+                    <div class="footer22" style="margin-top: 5px">
+                        <p style="width: 350px;">CỔNG THÔNG TIN ĐIỆN TỬ NÔNG NGHIỆP</p>
+                        <img src="{% static 'images/app-store.jpg' %}" alt="Logo" style="width: 100px; height: auto;">
+                    </div>
+                </div>
+    
+            </div>
+            <hr style="width: 80%">
+            <div class="ghi">
+                <p>Ghi rõ nguồn Nguyễn Thế Anh khi phát hành lại thông tin từ các nguồn này.</p>
+            </div>
+    
+        </div>
+    </footer>
+</body>
+</html>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectElement = document.querySelector('select#id_vung_trong');
+        
+        if (selectElement) {
+            selectElement.addEventListener('change', function() {
+                var selectedRegion = this.value;
+                if (selectedRegion) {
+                   
+                    
+                    var url = "{% url 'post:show_related_articles' %}?region_id=" + selectedRegion;
+                    window.location.href = url;
+                } else {
+                    
+                    console.log("selectedRegion is empty");
+                }
+            });
+        }
+    });
+
+
+    // Khi người dùng cuộn xuống 200px từ đầu trang, hiển thị nút lên đầu trang
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            document.getElementById("scrollToTopButton").style.display = "block";
+        } else {
+            document.getElementById("scrollToTopButton").style.display = "none";
+        }
+    }
+
+    // Khi người dùng nhấp vào nút, cuộn lên đầu trang
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+</script>

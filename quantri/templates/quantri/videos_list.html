@@ -1,0 +1,45 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Newspaper List</title>
+        <link rel="stylesheet" href="{% static 'quantri/newspaper_list_1.css' %}">
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="main_newspaper">
+           
+            {% for video in videos %}
+                <a href="{% url 'post:video' video.Video_id %}" class="newspaper-item">
+                    <div class="newspaper-item_1">
+                        <video controls width=100% height="300" class="bright-video">
+                            <source src="{{ video.VideoFile.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="newspaper-item_2">
+                        <h2 style="color: black;">{{ video.Title }}</h2>
+                        {% with words=video.Title_phu|wordcount %}
+                            {% if words > 10 %}
+                                <h3>{{ video.Title_phu|slice:":100" }}...</h3>
+                            {% else %}
+                                <h3 te>{{ video.Title_phu }}</h3>
+                            {% endif %}
+                        {% endwith %}
+
+                    </div>
+                </a>
+            {% empty %}
+                <p>Không có dữ liệu bài viết nào.</p>
+            {% endfor %}
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

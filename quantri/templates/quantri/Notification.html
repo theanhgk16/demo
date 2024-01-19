@@ -1,0 +1,46 @@
+
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        {% load static %}
+        <title>notification List</title>
+        <link rel="stylesheet" href="{% static 'quantri/items_list.css' %}">
+    </head>
+    <body>
+    <div class="main_item">
+        <ul>
+            <li class="Title"><strong></strong> {{ notification.Title }}</li>
+            <li class="Content"><strong></strong> {{ notification.Content1 }}</li>
+            {% if notification.Image1 %}
+                <li><strong></strong> <img src="{{ notification.Image1.url }}" alt="{{ notification.Title }}" width="100%" height="500">
+                </li>
+            {% endif %}
+            <li class="Content"><strong></strong> {{ notification.Content2 }}</li>
+          {% if notification.Image2 %}
+            <li><strong></strong> <img src="{{ notification.Image2.url }}" alt="{{ notification.Title }}" width="100%" height="500">
+            </li>
+        {% endif %}
+            <li class="Content"><strong></strong> {{ notification.Content3 }}</li>
+          {% if notification.Image3 %}
+            <li><strong></strong> <img src="{{ notification.Image3.url }}" alt="{{ notification.Title }}" width="100%" height="500">
+            </li>
+        {% endif %}
+            <li class="Content"><strong></strong> {{ notification.Content4 }}</li>
+          {% if notification.Image4 %}
+            <li><strong></strong> <img src="{{ notification.Image4.url }}" alt="{{ notification.Title }}" width="100%" height="500">
+            </li>
+        {% endif %}
+            <li class="Content"><strong></strong> {{ notification.Content5 }}</li>
+          {% if notification.Image5 %}
+            <li><strong></strong> <img src="{{ notification.Image5.url }}" alt="{{ notification.Title }}" width="100%" height="500">
+            </li>
+        {% endif %}
+
+        </ul>
+    </div>
+    </body>
+    </html>
+{% endblock %}

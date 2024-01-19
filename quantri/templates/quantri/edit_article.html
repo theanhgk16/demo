@@ -1,0 +1,123 @@
+{% extends 'quantri/base.html' %}
+{% block conten%}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Article</title>
+    <link rel="stylesheet" href="{% static 'quantri/edit_article.css' %}">
+    
+</head>
+<body>
+    <h2>Chỉnh Sửa Bài Viết</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% load custom_filters %}
+        <!-- các trường bài viết -->
+        <div class="content">
+            <label for="title">Tiêu Đề bài viết:</label>
+            <input type="text" name="title" id="title" value="{{ article.Title }}">
+            <br>
+            <label for="imageInput"></label>
+                {% if article.Image %}
+                    <p>Hình ảnh: <a href="{{ article.Image.url }}" target="_blank">{{ article.Image }}</a></p>
+                    <p>Chọn ảnh mới (nếu muốn): <input type="file" name="img"></p>
+                {% else %}
+                    <p>Thêm ảnh đại diện mới: <input type="file" name="img"></p>
+                {% endif %}
+            
+            <label for="content">Nội Dung:</label>
+            <textarea name="content" id="content" cols="30" rows="10">{{ article.Content }}</textarea>
+            <br>
+            <p>Thông tin về vùng trồng</p>
+            
+            <label for="RegionName">Tên Vùng:</label>
+            <input type="text" name="RegionName" id="RegionName" value="{{ growing_region.RegionName }}">
+            <br>
+            <label for="RegionDescription">Mô Tả Vùng:</label>
+            <textarea name="RegionDescription" id="RegionDescription" cols="30" rows="10">{{ growing_region.Description }}</textarea>
+            <br>
+            <label for="RegionArea">Diện tích (m²):</label>
+            <input type="text" name="RegionArea" id="RegionArea" value="{{ growing_region.Area|replace_comma_with_dot }}">
+            <br>
+            <label for="RegionMainProduct">Trái cây chính:</label>
+            <input type="text" name="RegionMainProduct" id="RegionMainProduct" value="{{ growing_region.MainProduct }}">
+            <br> 
+            <p>Thông tin địa điểm trồng</p>
+            
+
+            <label for="Latitude">Kinh tuyến:</label>
+            <input type="text" name="Latitude" id="Latitude" value="{{ Location.Latitude|replace_comma_with_dot }}">
+
+            <br>
+            <label for="Longitude">Vĩ tuyến:</label>
+            <input type="text" name="Longitude" id="Longitude" value="{{ Location.Longitude|replace_comma_with_dot }}">            
+            <br>
+            <label for="LocationName">Tên vùng:</label>
+            <input type="text" name="LocationName" id="LocationName" value="{{ Location.Name }}">
+            <br>
+            <p>Thông tin về trái cây</p>
+            <label for="FruitName">Tên:</label>
+            <input type="text" name="FruitName" id="FruitName" value="{{ fruit.FruitName }}">
+            <br>
+            <label for="FruitDescription">Mô tả trái cây:</label>
+            <input type="text" name="FruitDescription" id="FruitDescription" value="{{ fruit.Description }}">
+            <br>
+            <label for="PlantingTime">Ngày trồng:</label>
+            <input type="date" id="PlantingTime" name="PlantingTime" value="{{ fruit.PlantingTime|date:'Y-m-d' }}">
+
+            <br>
+            <label for="HarvestTime">Ngày thu hoạch:</label>
+            <input type="date" id="HarvestTime" name="HarvestTime" value="{{ fruit.HarvestTime|date:'Y-m-d' }}">
+            <br>
+            <label for="quantity">Diện tích (m²):</label>
+            <input type="number" id="quantity" name="quantity" step="1" min="0" value="{{ fruit.Quantity }}">
+            <br>
+            
+            {% for fruitConte in fruitConten %}
+                <p>Nội dung {{ forloop.counter }} </p>
+                {% csrf_token %}
+                <input hidden type="text" name="id{{ forloop.counter }}" value="{{fruitConte.id}}">
+                <label for="FruitName">Tiêu đề:</label>
+                <input type="text" name="titlefruitConten{{ forloop.counter }}" value="{{ fruitConte.title }}">
+                <label for="FruitName">Nội Dung:</label>
+                <textarea name="contentfruitConten{{ forloop.counter }}" id="FruitConten" cols="30" rows="10">{{ fruitConte.content }}</textarea>
+                <label for="FruitName">Ảnh:</label>
+                {% if fruitConte.image  %}
+                    <a href="{{ fruitConte.image.url }}" target="_blank">{{ fruitConte.image }}</a><br>
+                    <label for="">Đổi ảnh mới (nếu muốn)</label>
+                    <input type="file" name="imgfruitConten{{ forloop.counter }}" >
+                        
+                {% else %}
+                        <p>Thêm ảnh: <input type="file" name="imgfruitConten{{ forloop.counter }}" ></p>
+                {% endif %}
+                <input type="hidden" id="numForms" name="num_forms" value="{{ forloop.counter }}">
+
+              
+            {% endfor %}
+        
+           <p>VIDEO</p>
+            <!-- Input fields for uploading videos -->
+            <label for="video">Chọn Thêm video (nếu cần):</label>
+            <input type="file" name="video" accept="video/*" multiple>
+            <br>
+            <label for="Title_video">Mô tả về video:</label>
+            <input type="text" id="Title_video" name="Title_video">
+            <br>
+            {% for video in videos %}
+                <!-- <label for="Title_video">Mô tả về video:</label> -->
+                <a href="{{ video.VideoFile.url }}" target="_blank">{{ video.VideoFile }}</a>
+                <a href="{% url 'post:delete_video' video.id %}">Xóa</a>
+                <br>
+                <!-- <input type="text" id="Title_video" name="Title_video_{{ video.id }}" value="{{ video.Title }}">
+                <br> -->
+            {% endfor %}
+        </div>
+        
+        <input type="submit" value="Lưu chỉnh sửa">
+    </form>
+</body>
+</html>
+{% endblock%}

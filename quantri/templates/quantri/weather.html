@@ -1,0 +1,112 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Thời tiết</title>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'quantri/weather.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="{% static 'js/weather.js' %}"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Sử dụng một vòng lặp để gọi hàm cho từng phần tử trong danh sách dự báo
+                var weatherCardElements = document.querySelectorAll(".weather-card");
+                weatherCardElements.forEach(function (weatherCard, index) {
+                    updateWeatherIcon(index + 1); // index + 1 vì index trong forloop bắt đầu từ 0
+                });
+            });
+        </script>
+        <title>Biểu đồ Nhiệt độ</title>
+        <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+    </head>
+    <body>
+    <div class="container">
+        <br>
+
+        <form method="post" action="{% url 'post:weather' %}" class="text">
+            {% csrf_token %}
+            <label for="city" class="text1">Chọn tỉnh/thành phố:</label>
+            <select name="city" id="city" class="button1">
+                {% for city in city_list %}
+
+                    <option value="{{ city.name }}"
+                            {% if city.name == selected_city_name %}selected{% endif %}>{{ city.name }}</option>
+
+                {% endfor %}
+            </select>
+            <button type="submit" class="button2">Xem thời tiết</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% else %}
+            {% if selected_city_name %}
+                <h2 class="text2"> Thời tiết {{ selected_city_name }}</h2>
+            {% endif %}
+            <div class="weather-grid">
+                {% for forecast in daily_forecast %}
+                    <div class="weather-card">
+                        <h3>THỜI TIẾT HIỆN TẠI</h3>
+                        <img id="weather-icon-{{ forloop.counter }}" class="centered-image" src="" alt=""><br>
+                        <i class="fa-regular fa-clock"></i><strong> {{ forecast.dt_txt }}</strong> <br>
+                        <span class="bold-text"> Nhiệt Độ:</span> {{ forecast.main.temp_C }}°C<br>
+                        <span class="bold-text">Tình trạng thời tiết:</span> <span
+                            id="weather-status-{{ forloop.counter }}">{{ forecast.weather.0.main }}</span><br>
+                        <span class="bold-text">Độ ẩm:</span> {{ forecast.main.humidity }}%
+
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        {% endif %}
+        <div id="temperature-chart-container"></div>
+
+        <script>
+            const temperatureData = [];
+            const dayLabels = [];
+
+            {% for forecast in daily_forecast %}
+                temperatureData.push(parseFloat({{ forecast.main.temp_C|default:"0"|safe }}));
+                dayLabels.push('{{ forecast.dt_txt }}');
+            {% endfor %}
+
+            FusionCharts.ready(function () {
+                var chart = new FusionCharts({
+                    type: 'line',
+                    renderAt: 'temperature-chart-container',  // ID của vùng chứa biểu đồ
+                    width: '100%',  // Chiều rộng của biểu đồ
+                    height: '400',  // Chiều cao của biểu đồ
+                    dataFormat: 'json',
+                    dataSource: {
+                        chart: {
+                            caption: 'Biểu đồ Nhiệt độ',
+                            subCaption: '',
+                            xAxisName: 'Ngày',
+                            yAxisName: 'Nhiệt độ (°C)',
+                            theme: 'fusion'
+                        },
+                        data: dayLabels.map(function (label, index) {
+                            return {
+                                label: label,
+                                value: temperatureData[index]
+                            };
+                        })
+                    }
+                });
+
+                chart.render();
+            });
+        </script>
+    </div>
+    </body>
+    </html>
+{% endblock %}

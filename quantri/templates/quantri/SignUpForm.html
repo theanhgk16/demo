@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="{% static 'quantri/SignUpForm.css' %}">
+</head>
+<style>
+    #map {
+        display: none;
+    }
+    .error{
+        text-align: center;
+        color: rgb(244, 244, 250);
+        background-color: black;
+        max-width: 25%;
+        margin: auto;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    footer {
+        display: none;
+    }
+</style>
+<body>
+
+
+<form method="post" action="{% url 'post:register' %}">
+    
+    <div class="formdiv">
+        <h2 style="color: brown;">Đăng ký</h2>
+            {% for message in messages %}
+                    <p style=" color: brown; text-align: center;">{{ message }}</p>
+            {% endfor %}
+            
+            {% csrf_token %}
+
+            <input type="text" id="username" name="username" required placeholder="Nhập tên người dùng">
+            <input type="email" id="email" name="email" required placeholder="Nhập địa chỉ email">
+            <input type="password" id="password1" name="password1" required placeholder="Nhập mật khẩu">
+            <input type="password" id="password2" name="password2" required placeholder="Nhập lại mật khẩu">
+
+            <label for="otp">Mã xác thực Gmail:</label>
+            <p style="color: brown;">{{message}}</p>
+            <a class="get-otp-link" href="{% url 'post:gmail_verification' %}">Nhận mã</a>
+            <input type="text" id="otp" name="otp" required placeholder="Mã xác thực Gmail">
+
+            <button type="submit">Đăng ký</button>
+      
+            <a href="{% url 'post:login' %}">
+                <button type="button">Đăng nhập</button>
+            </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".get-otp-link").click(function(event){
+                    event.preventDefault(); //ngăn chặn hành động mặc định của sự kiện click ,ngăn chặn trang web chuyển đến một URL mới.
+
+                    var emailValue = $("#email").val();
+
+                    // Chuyển hướng đến trang xác thực Gmail với giá trị email
+                    var currentUrl = $(this).attr("href"); // lây url từ nút xác thực
+                    var newUrl = currentUrl + "?email=" + emailValue;
+                    window.location.href = newUrl;
+                });
+            });
+        </script>
+
+
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy các tham chiếu đến các trường input trong biểu mẫu
+        const usernameField = document.getElementById("username");
+        const password1Field = document.getElementById("password1");
+        const password2Field = document.getElementById("password2");
+        const emailFile = document.getElementById("email");
+
+        //Lấy giá trị đã lưu từ localStorage
+        const storedUsername = localStorage.getItem("usernameValue");
+        const storedPassword1 = localStorage.getItem("password1Value");
+        const storedPassword2 = localStorage.getItem("password2Value");
+        const storedemail = localStorage.getItem("emailValue");
+
+
+
+
+        if (storedUsername) {
+            usernameField.value = storedUsername;
+        }
+
+        if (storedPassword1) {
+            password1Field.value = storedPassword1;
+        }
+
+        if (storedPassword2) {
+            password2Field.value = storedPassword2;
+        }
+
+        if(storedemail){
+            emailFile.value = storedemail;
+        }
+
+
+        usernameField.addEventListener("input", function () {
+            localStorage.setItem("usernameValue", usernameField.value); // key , value
+        });
+
+        password1Field.addEventListener("input", function () {
+            localStorage.setItem("password1Value", password1Field.value);
+        });
+
+        password2Field.addEventListener("input", function () {
+            localStorage.setItem("password2Value", password2Field.value);
+        });
+
+        emailFile.addEventListener("input", function () {
+            localStorage.setItem("emailValue", emailFile.value);
+        });
+
+    });
+</script>
+
+
+</body>
+</html>

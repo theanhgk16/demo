@@ -1,0 +1,35 @@
+Admin:
+Quản lí bài viết
+Quản lí người dùng
+Quản lí vùng
+Quản lí địa điểm trồng
+Quản lí chats
+Quản lí sản vật
+Quản lí bài báo
+
+User:
+Xem thông tin
+Bình luận
+Quản lí tài khoản cá nhân
+Đóng góp bài viết
+Quản lí bài viết
+
+
+
+●	Tìm kiếm: Người dùng có thể tìm kiếm bài viết theo tiêu đề bài viết.
+●	Lọc: Người dùng có thể lọc bài viết theo từng vùng trồng
+●	Xem thông tin bài viết: Người dùng có thể xem thông tin chi tiết về các loại cây, vùng trồng, địa điểm, và các thông tin liên quan khác.
+●	Bình luận: Tạo cơ hội cho người dùng bình luận về các bài viết, tăng sự tương tác và chia sẻ thông tin.
+●	Thông báo: Người dùng có thể xem các thông báo liên quan đến bài viết mình tạo và các phản hồi bình luận của mình.
+●	Thời tiết: Người dùng có thể xem thời viết các vùng miền vào những ngày tới.
+●	Cập nhật thông tin tài khoản: Người dùng có thể thay đổi thông tin tài khoản mình.
+●	Đóng góp bài viết: Người dùng có thể tự mình tạo ra bài viết liên quan đến trái cây nông sản.
+●	Quản lý bài viết: Chức năng quản lý cho phép người dùng quản lý bài viết của mình và thực hiện các thao tác thêm, sửa, xóa bài viết.
+●	Quản lý bài viết (ADMIN): Chức năng quản lý cho phép Admin tạo và quản lý thông tin về các bài viết trên trang web.
+●	Quản lý vùng trồng (ADMIN): Cho phép admin quản lý các vùng trồng nông sản.
+●	Quản lý địa điểm (ADMIN): Cho phép admin quản lý tất cả những địa điểm trồng trái cây nông sản.
+●	Quản lý nông sản (ADMIN): Cho phép admin quản lý các trái cây nông sản
+●	Thông báo (ADMIN): Cho phép admin quản lý các thông báo hệ thông, cũng như biến động thị trường nông sản.
+●	Quản lí người dùng(ADMIN): Cho phép Admin xem số lượng thành viên đã đăng ký trên website.
+
+

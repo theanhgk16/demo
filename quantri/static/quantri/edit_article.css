@@ -1,0 +1,92 @@
+body {
+    font-family: "Times New Roman", sans-serif;
+    background-color: #f0f0f0;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.content{
+    width: 50%;
+    margin: auto;
+}
+/* Apply styles to the form container */
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style headings */
+h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Apply styles to labels */
+label {
+    font-weight: bold;
+}
+
+/* Apply styles to text inputs and textareas */
+.content input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Apply styles to date inputs and number inputs */
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the submit button */
+input[type="submit"] {
+    background-color: #324f6e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+}
+input[type="submit"]:hover{
+    border: 1px solid red;
+    background-color: #3b0d0d95;
+    color: #000000;
+    
+}
+/* Apply styles to links */
+a {
+    color: #007BFF;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+/* Apply styles to paragraph elements */
+p {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Apply styles to images and their descriptions */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Apply styles to videos and their descriptions */
+video {
+    max-width: 100%;
+    height: auto;
+}

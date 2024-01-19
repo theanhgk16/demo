@@ -1,0 +1,242 @@
+
+{% extends 'quantri/base.html' %}
+        
+    {% block conten%}
+ 
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            
+            {% load static %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <link rel="stylesheet" href="{% static 'quantri/indexx.css' %}">
+            <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js'></script>
+            <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet' /> -->
+            
+
+            
+            <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.min.js"></script>
+            <link
+                href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-geocoder@1.1.1/dist/goong-geocoder.css"
+                rel="stylesheet"
+                type="text/css"
+        />
+        
+        <!-- Promise polyfill script is required -->
+        <!-- to use Goong Geocoder in IE 11. -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        
+        </head>
+       
+            <div id="" class="LinkSlide" >
+                <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" scrolldelay="5" direction="left">
+                    <ul class="horizontal-list"> <!-- Sử dụng class "horizontal-list" để hiển thị danh sách ngang -->
+                        {% for notification in notifications %}
+                            <li><a style="text-transform: uppercase;" href="{% url 'post:notification' notification.NotificationID %}">{{ notification.Title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </marquee>
+            </div>
+        
+        
+        <body>
+           
+            <div class="container">
+                <div class="column2">
+                    <section>
+                        
+                    <div class="header">
+                        <h2 >Bài viết nông sản</h2>
+                        <a href="{% url 'post:create_article'%}"><i class="fa-regular fa-pen-to-square" style="color: #d51515; margin-right: 3px;"></i>Đóng góp bài viết</a> 
+                    </div>
+                    <hr>
+                    <ul class="article-list" ></ul>
+                   
+                        {% for page in articles %}
+
+                            <li class="article"> 
+                                <div class="c1">
+                                    {% if page.Image %}
+                                    <img src="{{ page.Image.url }}" alt="" >
+                                    {% endif %}
+                                </div>
+                                <div class="c2">
+                                    <a href="{% url 'post:article_detail' page.ArticleID %}" class="article-title">{{ page.Title }}</a>
+                                    <p class="article-content">{{ page.Content }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        {% if articles|length == 0 %}
+                            <p>Không có dữ liệu bài viết nào.</p>
+                        {% endif %}
+                    
+                    </ul>
+                        
+                    </section>
+                   
+                </div>
+                <div class="column1">
+                    <section>
+                        <h3>BẢN ĐỒ NÔNG SẢN</h3>
+                        <div id='map'></div>
+                        <div id="locations" data-locations="{{ locations_json }}"></div>
+                        <script src="{% static 'js/indexx.js' %}"></script>
+                    </section>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div style="background-color: red; width: 10px; height: 10px;"></div>
+                            <span>Dài ngày</span>
+                        </div>
+                        <div class="legend-item">
+                            <div style="background-color: #FFFF00; width: 10px; height: 10px;"></div>
+                            <span>Trung ngày</span>
+                        </div>
+                        <div class="legend-item">
+                            <div style="background-color: #00FF00; width: 10px; height: 10px;"></div>
+                            <span>Ngắn ngày</span>
+                        </div>
+                    </div>
+                    
+                   <div class="price">
+                    <hr>
+                        <P>BẢNG GIÁ NÔNG SẢN </P>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Sản phẩm</th>
+                                <th>TPHCM (VNĐ/Kg)</th>
+                                <th>Hà Nội (VNĐ/Kg)</th>
+                                <th>Đà Nẵng (VNĐ/Kg)</th>
+                            </tr>
+                            {% for product in ProductPrices %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.tphcm_price }}</td>  
+                                <td>{{ product.hanoi_price }}</td>
+                                <td>{{ product.danang_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                   </div>
+                    
+                </div>
+            </div>
+            
+            
+            <div class="pagination">
+                <span class="step-links">
+                    {% if articles.has_previous %}
+                        <a href="?page=1">&laquo; </a>
+                        <a href="?page={{ articles.previous_page_number }}">&lt;</a>
+                    {% endif %}
+            
+                    <span class="current-page">{{ articles.number }} / {{ articles.paginator.num_pages }}</span>
+            
+                    {% if articles.has_next %}
+                        <a href="?page={{ articles.next_page_number }}">&gt;</a>
+                        <a href="?page={{ articles.paginator.num_pages }}"> &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+                 
+            <!-- <script src="{% static 'js/index.js' %}"></script> -->
+        </body>
+        <hr>
+        <h3 style="text-align: center; font-weight: bolder;">BẢNG MÙA VỤ</h3>
+        <table>
+            <tr class="conten">
+                <td>MÙA VỤ</td>
+                <td>THỜI GIAN</td>
+                <td>NỘI DUNG</td>
+                <td>CHI TIẾT</td>
+            </tr>
+            {% for seasonPlans in seasonPlan %}
+            <tr>
+                <td>{{ seasonPlans.PlanName }} </td>
+                <td>{{ seasonPlans.StartDate|date:"d/m" }} - {{ seasonPlans.EndDate|date:"d/m" }}</td>
+                <td class="clum3">{{ seasonPlans.Description }} </td>
+                <td><a href="{% url 'post:detail_seasonPlans' seasonPlans.SeasonPlanID %}">Xem chi tiết</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        </html>
+        
+          
+        <div>
+            <div style="display: flex; align-items: center;">
+                <h3 style="font-size: 24px;color: #03932a;font-weight: 500;">Sản vật địa phương</h3>
+                <hr style=" margin-left: 2px; flex-grow: 1; background-color: #ddd;" >
+            </div>
+           
+            <ul class="itme-list_index">
+                {% for item in items %}
+                    <li class="tme-list_a">
+    
+                        {% if item.Image1 %}
+                            <a href="{% url 'post:item' item.Items_id %}">
+                                <img src="{{ item.Image1.url }}" alt="{{ item.Title }}" width="100%" height="200px">
+                            </a>
+                        {% endif %}
+                    <a href="{% url 'post:item' item.Items_id %}" class="article-title">{{ item.Title }}</a>
+    
+                    </li>
+                {% endfor %}
+    
+                {% if not items %}
+                    <p>Không có dữ liệu sản phẩm nào.</p>
+                {% endif %}
+    
+            </ul>
+        </div>
+        <div>
+            <div style="display: flex; align-items: center;">
+                <h3 style="font-size: 24px;color: #03932a;font-weight: 500;">Báo điện tử</h3>
+                <hr style=" margin-left: 2px; flex-grow: 1; background-color: #ddd;" >
+            </div>
+            
+            <ul class="newspaper-list_index">
+                {% for newspaper in newspapers %}
+                    <li class="newspaper-list">
+                        <div class="newspaper-list_1">
+                            {% if newspaper.Image1 %}
+                                <a href="{% url 'post:newspaper' newspaper.Newspaper_id %}">
+                                    <img src="{{ newspaper.Image1.url }}" alt="{{ newspaper.Title }}" width="30%"
+                                         height="300px">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="newspaper-list_2">
+                            <a href="{% url 'post:newspaper' newspaper.Newspaper_id %}"
+                               class="newspaper-title">{{ newspaper.Title }}</a>
+                            <a href="{% url 'post:newspaper' newspaper.Newspaper_id %}"
+                               class="newspaper-title1">{{ newspaper.Title1 }}</a>
+                        </div>
+                        <div class="newspaper-list_3">
+    
+                        </div>
+                    </li>
+                {% endfor %}
+    
+                {% if not newspapers %}
+                    <p>Không có dữ liệu sản phẩm nào.</p>
+                {% endif %}
+    
+            </ul>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="botchat">
+                {% include "quantri/chatbot.html" %}
+            </div>
+        {% endif %}
+    
+      
+    {% endblock%}
+   

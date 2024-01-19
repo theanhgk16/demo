@@ -1,0 +1,86 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm vùng trồng</title>
+    <link rel="stylesheet" href="{% static 'quantri/newspaper_list_1.css' %}">
+    <style>
+       
+
+        .contenttt {
+            width: 60%;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+            margin-bottom: 100px;
+        }
+
+        .contenttt h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .contenttt label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .contenttt input,
+        .contenttt textarea,
+        .contenttt button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .contenttt button {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .contenttt button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="{% url 'post:create_growing_region' %}">
+        {% csrf_token %}
+        <div class="contenttt">
+            <h1>THÊM VÙNG TRỒNG</h1>
+            {% if message %}
+                <p style="color: red;">{{ message }}</p>
+            {% endif %}
+            
+            <label for="RegionName">Tên Vùng:</label>
+            <input type="text" name="RegionName" id="RegionName" required>
+            <label for="Description">Mô Tả Vùng:</label>
+            <textarea name="Description" id="Description" rows="9"></textarea>
+            <label for="Area">Diện Tích Trồng (m2):</label>
+            <input type="number" name="Area" id="Area" min="0" required>
+            <label for="MainProduct">Trái Cây Chính:</label>
+            <input type="text" name="MainProduct" id="MainProduct" required>
+            <button type="submit">THÊM</button>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock %}

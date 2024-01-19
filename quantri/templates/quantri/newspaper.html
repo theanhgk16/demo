@@ -1,0 +1,151 @@
+{% extends 'quantri/base.html' %}
+
+{% block conten %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        {% load static %}
+        <title>Items List</title>
+        <link rel="stylesheet" href="{% static 'quantri/items_list.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <!-- Include other meta tags as needed -->
+        <meta property="og:title" content="{{ article.title }}"/>
+        <meta property="og:description" content="{{ article.description }}"/>
+        <meta property="og:image" content="{{ article.image_url }}"/>
+        <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+        <meta property="og:type" content="article"/>
+        <meta property="fb:app_id" content="Your Facebook App ID"/>
+
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="main_item">
+            <ul>
+                <li class="Title"><strong></strong> {{ newspaper.Title }}</li>
+                <li class="Title1" style="opacity: 0.6;"><strong></strong> {{ newspaper.Title1 }}</li>
+                <li class="Content"><strong></strong> {{ newspaper.Content1 }}</li>
+                {% if newspaper.Image1 %}
+                    <li><strong></strong> <img src="{{ newspaper.Image1.url }}" alt="{{ newspaper.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ newspaper.Content2 }}</li>
+                {% if newspaper.Image2 %}
+                    <li><strong></strong> <img src="{{ newspaper.Image2.url }}" alt="{{ newspaper.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ newspaper.Content3 }}</li>
+                {% if newspaper.Image3 %}
+                    <li><strong></strong> <img src="{{ newspaper.Image3.url }}" alt="{{ newspaper.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ newspaper.Content4 }}</li>
+                {% if newspaper.Image4 %}
+                    <li><strong></strong> <img src="{{ newspaper.Image4.url }}" alt="{{ newspaper.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+                <li class="Content"><strong></strong> {{ newspaper.Content5 }}</li>
+                {% if newspaper.Image5 %}
+                    <li><strong></strong> <img src="{{ newspaper.Image5.url }}" alt="{{ newspaper.Title }}" width="100%"
+                                               height="500">
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div>
+            <div class="main_newspaper_column_2">
+                {% for newspaper in newspaperss %}
+                    <a href="{% url 'post:newspaper' newspaper.Newspaper_id %}" class="newspaper-item_column_2">
+                        <div class="newspaper-item_1_2">
+                            {% if newspaper.Image1 %}
+                                <img src="{{ newspaper.Image1.url }}" alt="Image 1">
+                            {% endif %}
+                        </div>
+                        <div class="newspaper-item_2_2">
+                            <h2>{{ newspaper.Title }}</h2>
+                            {% with words=newspaper.Title1|wordcount %}
+                                {% if words > 10 %}
+                                    <h3>{{ newspaper.Title1|slice:":100" }}...</h3>
+                                {% else %}
+                                    <h3>{{ newspaper.Title1 }}</h3>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="social-share-buttons">
+           
+            <div class="facebook-share-button">
+                <i class="fab fa-facebook" style="color: #1877f2"></i>
+                <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button"
+                     data-size="small">
+                    <a target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&amp;src=sdkpreparse"
+                       class="fb-xfbml-parse-ignore">Share on Facebook</a>
+                </div>
+            </div>
+
+            <div class="twitter-share-button">
+                <img src="{% static 'images/zalo1.png' %}" alt="Logo"
+                     style="width: 25px; height: 25px; margin-right: 10px">
+                <a target="_blank"
+                   href="https://zalo.me/share?url={{ request.build_absolute_uri }}/{{ user_avt.zalo }}">Share on
+                    Zalo</a>
+            </div>
+
+            <div class="twitter-share-button">
+                <i class="fab fa-twitter"></i>
+                <a target="_blank" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}">Tweet on
+                    Twitter</a>
+            </div>
+        </div>
+
+
+        <div class="h_r">
+            <p class="additional-text">TIN KHÁC</p>
+            <hr class="divider">
+        </div>
+
+        <div class="main_item_2">
+            {% for newspaper in newspapers %}
+                <a href="{% url 'post:newspaper' newspaper.Newspaper_id %}" class="newspaper-item_column_2">
+                    <div class="main_item_2_1">
+                        {% if newspaper.Image1 %}
+                            <img src="{{ newspaper.Image1.url }}" alt="Image 1">
+                        {% endif %}
+                    </div>
+                    <div class="main_item_2_2">
+                        <h2>{{ newspaper.Title }}</h2>
+                        <p class="description">
+                            {% with words=newspaper.Title1|wordcount %}
+                                {% if words > 10 %}
+                                    {{ newspaper.Title1|slice:":100" }}...
+                                {% else %}
+                                    {{ newspaper.Title1 }}
+                                {% endif %}
+                            {% endwith %}
+                        </p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+
+    </div>
+    </body>
+    </html>
+{% endblock %}

@@ -1,0 +1,51 @@
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+body{
+    margin-top: 100px;
+}
+.fromlogin{
+
+    width: 30%;
+    margin: auto;
+    margin-bottom: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+.fromlogin button{
+    display: block;
+    margin: auto;
+}
+.fromlogin input[type="text"], input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: rgb(197, 10, 51);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #b30054;
+}
+
+.dangky_quenmatkahu {
+    margin-top: 30px;
+    text-align: center;
+}
